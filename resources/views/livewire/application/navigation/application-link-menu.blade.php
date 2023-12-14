@@ -1,11 +1,14 @@
 <div class="container pt-4 ">
+    <div  class="d-flex justify-content-center">
+        <h1 wire:loading wire:target='makeLoadingState' >Chargement...</h1>
+    </div>
     <div>
         <img class="" src="{{asset('logo-white.png')}}" alt="Logo">
     </div>
     <div class="row mt-4">
         @foreach (Auth::user()?->appLinks as $appLink)
             <div class="col-12 col-sm-6 col-md-3">
-                <a href="{{ route($appLink?->link, $appLink) }}" wire:navigate>
+                <a wire:click='makeLoadingState' href="{{ route($appLink?->link, $appLink) }}" wire:navigate>
                     <div class="info-box">
                         <span class="info-box-icon {{$appLink?->color}} elevation-1">
                             <i class="fas {{ $appLink->icon }}"></i>

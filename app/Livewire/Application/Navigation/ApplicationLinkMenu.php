@@ -7,6 +7,9 @@ use Livewire\Component;
 
 class ApplicationLinkMenu extends Component
 {
+    public function makeLoadingState(){
+
+    }
     public function render()
     {
         $appLinks=AppLink::inRandomOrder()
