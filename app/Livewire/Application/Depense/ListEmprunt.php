@@ -81,6 +81,7 @@ class ListEmprunt extends Component
     public function render()
     {
         $this->totalByCurrency = EmpruntHelper::getAmountEmpruntGroupingByCurrency($this->month);
-        return view('livewire.application.depense.list-emprunt', ['listEmprunt' => EmpruntHelper::get($this->month)]);
+        return view('livewire.application.depense.list-emprunt',
+         ['listEmprunt' => EmpruntHelper::get($this->month)]);
     }
 }

@@ -18,6 +18,7 @@ use App\Livewire\Application\Payment\MainControlPayment;
 use App\Livewire\Application\Rapport\Payment\RapportAllReceiptBySection;
 use App\Http\Controllers\Application\Printings\PrintingReceiptController;
 use App\Livewire\Application\Depense\MyDepense;
+use App\Livewire\Application\Depense\MyEmprunt;
 use App\Livewire\Application\Inscription\List\ListAllInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
 use App\Livewire\Application\Inscription\List\ListStudentResponsable;
@@ -74,6 +75,7 @@ Route::middleware(['auth','route-access-checker'])->group(function () {
     //Depense
     Route::prefix('depense')->group(function(){
         Route::get('all',MyDepense::class)->name('depense.all');
+        Route::get('emprunt',MyEmprunt::class)->name('depense.emprunt');
     });
 
     //Tarifications

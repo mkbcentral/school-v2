@@ -1,4 +1,7 @@
 <div>
+    @livewire('application.inscription.forms.edit-inscription-form')
+    @livewire('application.inscription.forms.edit-classe-and-inscription')
+    @livewire('application.payment.widget.list-payments-by-student-widget')
     <div>
         <div class="content-header">
             <div class="container-fluid">
@@ -28,7 +31,7 @@
                     </span>{{ $classeData->name . '/' . $classeData->classeOption->name }}</h4>
             </div>
             <div class="d-flex justify-content-between align-items-center">
-                <x-form.search-input  wire:model.live.debounce.500ms="keyToSearch" />
+                <x-form.search-input wire:model.live.debounce.500ms="keyToSearch" />
                 <a target="_blank" href="{{ route('print.list.inscription.by.classe', $classeData->id) }}"><i
                         class="fa fa-print" aria-hidden="true"></i> Imprimer la liste</a>
             </div>
@@ -39,6 +42,7 @@
                         <th>Noms élève</th>
                         <th class="text-center">Genre</th>
                         <th class="text-center">Age</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -53,10 +57,61 @@
                             <td class="text-center">
                                 {{ $inscription->student->getAge($inscription->student->date_of_birth) }}
                             </td>
+                            <td class="text-center">
+                                @can(['view-total-amount'])
+                                    <x-form.button wire:click.prevent='getInscription({{ $inscription }})' class="btn-sm"
+                                        type="button" data-toggle="modal" data-target="#paymentsByStudent">
+                                        <i class="fas fa-eye text-secondary"></i>
+                                    </x-form.button>
+                                    <x-form.button wire:click.prevent='edit({{ $inscription->student }})' class="btn-sm"
+                                        type="button" data-toggle="modal" data-target="#formEditInscriptionModal">
+                                        <i class="fas fa-edit text-primary"></i>
+                                    </x-form.button>
+                                    <x-form.button wire:click.prevent='editInscription({{ $inscription }})'
+                                        class="btn-sm text-secondary" type="button" data-toggle="modal"
+                                        data-target="#editClasseAnInscription">
+                                        <i class="fa fa-cog" aria-hidden="true"></i>
+                                    </x-form.button>
+                                    <x-form.button class=" btn-sm" type="button"
+                                        wire:click.prevent="shwoDeleteDialog({{ $inscription->id }})">
+                                        <span wire:loading wire:target="shwoDeleteDialog({{ $inscription->id }})"
+                                            class="spinner-border spinner-border-sm" role="status"
+                                            aria-hidden="true"></span>
+                                        <i class="fa fa-trash text-danger" aria-hidden="true"></i>
+                                    </x-form.button>
+                                @endcan
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
         @endif
     </div>
+    @push('js')
+        <script type="module">
+            //Confirmation dialog for delete role
+            window.addEventListener('delete-inscription-dialog', event => {
+                Swal.fire({
+                    title: 'Action fatale, Voulez-vous vraimant sûre ',
+                    text: "supprimer l'inscription?",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        Livewire.dispatch('deleteInscriptionDataListner');
+                    }
+                })
+            })
+            window.addEventListener('inscription-deleted', event => {
+                Swal.fire(
+                    'Oprétion !',
+                    event.detail[0].message,
+                    'success'
+                );
+            });
+        </script>
+    @endpush
 </div>

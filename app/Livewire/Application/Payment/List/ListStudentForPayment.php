@@ -18,10 +18,6 @@ class ListStudentForPayment extends Component
         $this->dispatch('studentPayment', $inscription);
         $this->dispatch('paymentsByInscription', $inscription);
     }
-    public function mount()
-    {
-       
-    }
     public function render()
     {
         return view('livewire.application.payment.list.list-student-for-payment',

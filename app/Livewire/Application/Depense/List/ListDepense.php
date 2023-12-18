@@ -30,7 +30,6 @@ class ListDepense extends Component
 
     public function updatedCategory($val)
     {
-        dd($val);
         $this->category = $val;
     }
     public function updatedCurrency($val)
@@ -103,9 +102,9 @@ class ListDepense extends Component
     public function render()
     {
         if ($this->isByDate == true) {
-            $this->listDepense = DepenseHelper::getDate($this->date, $this->currency, $this->source);
+            $this->listDepense = DepenseHelper::getDate($this->date, $this->currency, $this->source,$this->category);
         } else {
-            $this->listDepense = DepenseHelper::get($this->month, $this->currency, $this->source);
+            $this->listDepense = DepenseHelper::get($this->month, $this->currency, $this->source,$this->category);
         }
         //dd(DepenseHelper::getAmountByMonthAndByCurrency('08','USD',4));
         $this->dispatch('getMonthDepense', $this->month);
