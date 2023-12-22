@@ -18,19 +18,18 @@ class ListDepense extends Component
     public bool $isByDate = true;
     public ?Depense $depense;
     public bool $isEditing = false;
-    public string $source = '',$category='',$currency = '';
+    public string $source = '', $category = '', $currency = '';
     public ?Collection $currencyList;
     public ?Collection $listDepense;
-    public ?Collection $listDepenseSource,$listCategoryDepense;
+    public ?Collection $listDepenseSource, $listCategoryDepense;
     public string $depenseId;
     protected $listeners = [
         'refreshListDepense' => '$refresh',
-        'deleteDepenseListner'=>'delete'
+        'deleteDepenseListner' => 'delete'
     ];
 
     public function updatedCategory($val)
     {
-        dd($val);
         $this->category = $val;
     }
     public function updatedCurrency($val)
@@ -44,12 +43,12 @@ class ListDepense extends Component
 
     public function updatedDate($val)
     {
-        $this->date=$val;
+        $this->date = $val;
         $this->isByDate = true;
     }
     public function updatedMonth($val)
     {
-        $this->month=$val;
+        $this->month = $val;
         $this->isByDate = false;
         $this->dispatch('getMonthEmprunt', $val);
         $this->dispatch('getMonthDepense', $val);
@@ -62,8 +61,8 @@ class ListDepense extends Component
     }
     public function show(Depense $depense, string $id)
     {
-       $this->depense=$depense;
-       $this->dispatch('getDepenseData',$depense);
+        $this->depense = $depense;
+        $this->dispatch('getDepenseData', $depense);
     }
 
     public function edit(Depense $depense, string $id)
@@ -82,9 +81,9 @@ class ListDepense extends Component
     public function delete()
     {
         try {
-            $depense=DepenseHelper::show($this->depenseId);
+            $depense = DepenseHelper::show($this->depenseId);
             DepenseHelper::delete($depense);
-            $this->dispatch('depense-dialog-deleted', ['message'=>"Action bien réalisée !"]);
+            $this->dispatch('depense-dialog-deleted', ['message' => "Action bien réalisée !"]);
         } catch (\Exception $ex) {
             $this->dispatch('error',  $ex->getMessage());
         }
@@ -97,18 +96,18 @@ class ListDepense extends Component
         $this->months = (new DateFormatHelper())->getMonthsForScolaryYear();
         $this->currencyList = SchoolHelper::getCurrencyList();
         $this->listDepenseSource = DepenseSourceHelper::get();
-        $this->listCategoryDepense=CategoryDepenseHelser::get();
+        $this->listCategoryDepense = CategoryDepenseHelser::get();
     }
 
     public function render()
     {
         if ($this->isByDate == true) {
-            $this->listDepense = DepenseHelper::getDate($this->date, $this->currency, $this->source);
+            $this->listDepense = DepenseHelper::getDate($this->date, $this->currency, $this->source, $this->category);
         } else {
-            $this->listDepense = DepenseHelper::get($this->month, $this->currency, $this->source);
+            $this->listDepense = DepenseHelper::get($this->month, $this->currency, $this->source, $this->category);
         }
         //dd(DepenseHelper::getAmountByMonthAndByCurrency('08','USD',4));
         $this->dispatch('getMonthDepense', $this->month);
-        return view('livewire.application.depense.list.list-depense',);
+        return view('livewire.application.depense.list.list-depense');
     }
 }

@@ -16,8 +16,9 @@
                     <div class="modal-body">
                         @if ($inscription)
                             <div class="card p-2">
-                                <h6><span class="text-bold text-info">Nom:</span>{{$inscription->student->name}}</h6>
-                                <h6><span class="text-bold text-info">Classe:</span>{{$inscription->classe->name}}</h6>
+                                <h6><span class="text-bold text-info">Nom:</span>{{ $inscription->student->name }}</h6>
+                                <h6><span class="text-bold text-info">Classe:</span>{{ $inscription->classe->name }}
+                                </h6>
                             </div>
                             <div class="card">
                                 <div class="card-body">
@@ -29,7 +30,8 @@
                                                     <option value="">Choisir...</option>
                                                     @foreach ($classeList as $classe)
                                                         <option value="{{ $classe->id }}">
-                                                            {{ $classe->name . '/' . $classe->classeOption->name }}</option>
+                                                            {{ $classe->name . '/' . $classe->classeOption->name }}
+                                                        </option>
                                                     @endforeach
                                                 </x-select>
                                             </div>
@@ -48,8 +50,8 @@
                                         <div class="col-md-12">
                                             <div class="form-group">
                                                 <x-form.label value="{{ __('Date de paiment') }}" />
-                                                <x-form.input class="" type='date' placeholder="Date de paiement"
-                                                    wire:model='created_at' />
+                                                <x-form.input class="" type='date'
+                                                    placeholder="Date de paiement" wire:model='created_at' />
                                                 @error('created_at')
                                                     <span class="error text-danger">{{ $message }}</span>
                                                 @enderror
@@ -60,7 +62,8 @@
                                                 <x-form.label value="{{ __('Famille') }}" />
                                                 <x-select wire:model='student_responsable_id '>
                                                     @foreach ($famillyList as $familly)
-                                                        <option value="{{ $familly->id }}">{{ $familly->name_responsable }}</option>
+                                                        <option value="{{ $familly->id }}">
+                                                            {{ $familly->name_responsable }}</option>
                                                     @endforeach
                                                 </x-select>
                                             </div>
@@ -68,11 +71,17 @@
                                     </div>
                                 </div>
                             </div>
+                        @else
+                            <div class="d-flex justify-content-center p-2">
+                                <x-widget.loading-circular-md />
+                            </div>
                         @endif
+
                     </div>
                     <div class="modal-footer">
                         <x-form.button type="submit" class="btn btn-primary">Sauvegarder</x-form.button>
-                        <x-form.button type="button" class="btn btn-danger" data-dismiss="modal">Annuler</x-form.button>
+                        <x-form.button type="button" class="btn btn-danger"
+                            data-dismiss="modal">Annuler</x-form.button>
                     </div>
                 </form>
             </div>

@@ -26,41 +26,11 @@ class ListInscriptionByClasse extends Component
     public $idInscription;
     public $selectedIndex = 0;
 
-    public function edit(Inscription $inscription)
-    {
-        $this->selectedIndex = $inscription->classe->classeOption->id;
-        $this->dispatch('studentAndInscription', $inscription->student);
-    }
-    public function editInscription(Inscription $inscription)
-    {
-        $this->dispatch(
-            'inscriptionToEdit',
-            $inscription,
-            $this->selectedIndex == 0 ?
-                $inscription->classe->classeOption->id :
-                $this->selectedIndex
-        );
-    }
 
     public function showDeleteDialog(string $idInscription)
     {
         $this->idInscription = $idInscription;
         $this->dispatch('delete-inscription-dialog');
-    }
-    public function delete()
-    {
-        $inscription = Inscription::find($this->idInscription);
-        $student = Student::find($inscription->student_id);
-        $scolayYear = (new SchoolHelper())->getCurrentScolaryYear();
-        if ($inscription->payments->isEmpty()) {
-            $inscription->delete();
-            if ($student->scolaryYear->id == $scolayYear->id) {
-                $student->delete();
-            }
-            $this->dispatch('inscription-deleted', ['message' => "Inscription bien rétirée !"]);
-        } else {
-            $this->dispatch('inscription-deleted', ['message' => "Impossible, Cette inscription a déjà des données utilisée dans le système"]);
-        }
     }
 
 
@@ -69,6 +39,55 @@ class ListInscriptionByClasse extends Component
         $this->classeId = $classe;
         $this->classeData = Classe::find($classe);
     }
+
+    public function getInscription(Inscription $inscription)
+    {
+        $this->dispatch('InscriptionData', $inscription);
+        $this->dispatch('paymentsByInscription', $inscription);
+    }
+
+    public function edit(Student $student)
+    {
+        $this->dispatch('studentAndInscription', $student);
+    }
+    public function editInscription(Inscription $inscription)
+    {
+        $this->dispatch(
+            'inscriptionToEdit',
+            $inscription,
+            $inscription->classe->classeOption->id
+        );
+    }
+
+    public function shwoDeleteDialog(int $id)
+    {
+        $this->idInscription = $id;
+        $this->dispatch('delete-inscription-dialog');
+    }
+
+    public function delete()
+    {
+        $inscription = Inscription::find($this->idInscription);
+        $student = Student::find($inscription->student_id);
+        $scolayYear = (new SchoolHelper())->getCurrectScolaryYear();
+        if ($inscription->payments->isEmpty()) {
+            $inscription->delete();
+            if ($student->scolaryYear->id == $scolayYear->id) {
+                $student->delete();
+            }
+        } else {
+            foreach ($inscription->payments as $payment) {
+                $payment->delete();
+            }
+            $inscription->delete();
+            if ($student->scolaryYear->id == $scolayYear->id) {
+                $student->delete();
+            }
+            $inscription->delete();
+        }
+        $this->dispatch('inscription-deleted', ['message' => "Inscription bien rétirée !"]);
+    }
+
     public function render()
     {
         $this->inscriptions = GetAllInscriptionHelper::getListInscriptionByClasseForCurrentYear($this->classeId, $this->keyToSearch);

@@ -37,6 +37,7 @@ class EditClasseAndInscription extends Component
         $this->dispatch('updated', ['message' => "Info bien mise jour!"]);
         $this->dispatch('refreshListInscription');
         $this->dispatch('refreshListResponsible');
+        $this->dispatch('refreshSudentList');
     }
     public function render()
     {

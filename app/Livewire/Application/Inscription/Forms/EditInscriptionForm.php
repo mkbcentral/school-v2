@@ -31,8 +31,10 @@ class EditInscriptionForm extends Component
         $this->student->update($data);
         $this->dispatch('updated', ['message' => "Info bien mise jour!"]);
         $this->dispatch('refreshListInscription');
+        $this->dispatch('refreshSudentList');
         $this->student=null;
     }
+
 
     public function resetFrom(){
         $this->student=null;

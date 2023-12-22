@@ -1,6 +1,5 @@
 <div class="card mt-4 p-2">
     @livewire('application.depense.list-depense-source')
-    @livewire('application.depense.list-emprunt')
     @livewire('application.depense.form.form-depense')
     <div class="row">
         <div class="col-md-10">
@@ -27,10 +26,10 @@
                         data-target="#listSourceDepenseModal">
                         <i class="fas fa-coins    "></i> Source dépennse
                     </x-form.button>
-                    <x-form.button type="button" class="btn-info  w-100 mt-2" data-toggle="modal"
-                        data-target="#listEmpruntModal">
+                    <a href="{{ route('depense.emprunt') }}"  wire:navigate  class="btn btn-info  w-100 mt-2">
                         <i class="fas fa-hand-holding-usd    "></i>Nos Emprunts
-                    </x-form.button>
+                    </a>
+                    
                 </div>
             </div>
             @livewire('application.depense.widget.amount-depense-by-currency-widget')
