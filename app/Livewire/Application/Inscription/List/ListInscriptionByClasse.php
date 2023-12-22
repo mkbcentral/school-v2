@@ -11,26 +11,39 @@ use Livewire\Component;
 
 class ListInscriptionByClasse extends Component
 {
-    protected $listeners=[
-        'deleteInscriptionDataListner'=>'delete',
-        'refreshSudentList'=>'$refresh'
+    protected $listeners = [
+        'scolaryYearFresh' => 'getScolaryYear',
+        'CurrancyFresh' => 'getCurrency',
+        'refreshListInscription' => '$refresh',
+        'selectedClasseOption' => 'getOptionSelected',
+        'deleteInscriptionListner' => 'delete'
     ];
+
     public $keyToSearch = '';
     public $classeId;
     public $inscriptions;
     public $classeData;
     public $idInscription;
-    public ?Inscription $inscription;
+    public $selectedIndex = 0;
+
+
+    public function showDeleteDialog(string $idInscription)
+    {
+        $this->idInscription = $idInscription;
+        $this->dispatch('delete-inscription-dialog');
+    }
+
+
     public function mount($classe)
     {
         $this->classeId = $classe;
         $this->classeData = Classe::find($classe);
-        $this->inscription=null;
     }
 
-    public function getInscription(Inscription $inscription){
-        $this->dispatch('InscriptionData',$inscription);
-        $this->dispatch('paymentsByInscription',$inscription);
+    public function getInscription(Inscription $inscription)
+    {
+        $this->dispatch('InscriptionData', $inscription);
+        $this->dispatch('paymentsByInscription', $inscription);
     }
 
     public function edit(Student $student)
@@ -46,8 +59,9 @@ class ListInscriptionByClasse extends Component
         );
     }
 
-    public function shwoDeleteDialog(int $id){
-        $this->idInscription=$id;
+    public function shwoDeleteDialog(int $id)
+    {
+        $this->idInscription = $id;
         $this->dispatch('delete-inscription-dialog');
     }
 
@@ -62,14 +76,14 @@ class ListInscriptionByClasse extends Component
                 $student->delete();
             }
         } else {
-           foreach ($inscription->payments as $payment) {
+            foreach ($inscription->payments as $payment) {
                 $payment->delete();
-           }
-           $inscription->delete();
-           if ($student->scolaryYear->id == $scolayYear->id) {
-               $student->delete();
-           }
-           $inscription->delete();
+            }
+            $inscription->delete();
+            if ($student->scolaryYear->id == $scolayYear->id) {
+                $student->delete();
+            }
+            $inscription->delete();
         }
         $this->dispatch('inscription-deleted', ['message' => "Inscription bien rétirée !"]);
     }

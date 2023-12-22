@@ -123,8 +123,10 @@ class ListInscription extends Component
         } else {
             $this->classeList = (new SchoolHelper())->getListClasseByOption($this->classe_option_id);
         }
-        return view('livewire.application.inscription.list.list-inscription',
-         ['inscriptions' => (new GetInscriptionByDateHelper())
-         ->getDateInscriptions($this->date_to_search, $this->defaultScolaryYerId, $this->classe_id, 0, $this->defaultCureencyName)]);
+        return view(
+            'livewire.application.inscription.list.list-inscription',
+            ['inscriptions' => (new GetInscriptionByDateHelper())
+                ->getDateInscriptions($this->date_to_search, $this->defaultScolaryYerId, $this->classe_id, 0, $this->defaultCureencyName)]
+        );
     }
 }
