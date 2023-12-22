@@ -4,7 +4,6 @@ namespace App\Livewire\Application\Depense;
 
 use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Depense\EmpruntHelper;
-use App\Livewire\Helpers\SchoolHelper;
 use App\Models\Currency;
 use App\Models\Emprunt;
 use Illuminate\Support\Collection;
