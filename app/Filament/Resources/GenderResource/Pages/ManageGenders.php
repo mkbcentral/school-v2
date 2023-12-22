@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\GenderResource\Pages;
 
 use App\Filament\Resources\GenderResource;
-use Filament\Pages\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageGenders extends ManageRecords
@@ -13,7 +13,7 @@ class ManageGenders extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

@@ -3,15 +3,15 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\SubAppLinkResource\Pages;
-use App\Filament\Resources\SubAppLinkResource\RelationManagers;
 use App\Models\SubAppLink;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class SubAppLinkResource extends Resource
 {
@@ -23,11 +23,11 @@ class SubAppLinkResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
+                TextInput::make('icon')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('link')
+                TextInput::make('link')
                     ->maxLength(255),
             ]);
     }
@@ -36,19 +36,19 @@ class SubAppLinkResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('icon'),
-                Tables\Columns\TextColumn::make('link'),
+                TextColumn::make('name'),
+                TextColumn::make('icon'),
+                TextColumn::make('link'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+               EditAction::make(),
+               DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+               DeleteBulkAction::make(),
             ]);
     }
 

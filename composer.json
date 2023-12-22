@@ -8,13 +8,13 @@
         "php": "^8.1",
         "barryvdh/laravel-debugbar": "^3.7",
         "barryvdh/laravel-dompdf": "^2.0",
-        "filament/filament": "3.0-stable",
+        "filament/filament": "3.1",
         "guzzlehttp/guzzle": "^7.2",
         "laravel/fortify": "^1.13",
         "laravel/framework": "^10.14.1",
         "laravel/sanctum": "^3.0",
         "laravel/tinker": "^2.7",
-        "livewire/livewire": "3.0",
+        "livewire/livewire": "3.0.8",
         "mediumart/orange-sms": "^2.0",
         "mike42/escpos-php": "^2.2",
         "phpoffice/phpspreadsheet": "^1.29",
@@ -38,8 +38,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-          "app/helpers/theme_helper.php",
-          "app/helpers/app_setting_helper.php",
+            "app/helpers/theme_helper.php",
+            "app/helpers/app_setting_helper.php",
             "app/helpers/number_format_helper.php",
             "app/helpers/app_date_format_helper.php",
             "app/helpers/app_currecny_helper.php"
@@ -53,7 +53,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"

@@ -20,10 +20,9 @@ use App\Livewire\Application\Rapport\Payment\RapportAllReceiptBySection;
 use App\Http\Controllers\Application\Printings\PrintingReceiptController;
 use App\Livewire\Application\Depense\ListEmprunt;
 use App\Livewire\Application\Depense\MyDepense;
-use App\Livewire\Application\Depense\MyEmprunt;
 use App\Livewire\Application\Inscription\List\ListAllInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
-use App\Livewire\Application\Inscription\List\ListStudentResponsable;
+use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
 use App\Livewire\Application\Payment\MainLatePaymeent;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;
@@ -81,7 +80,12 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
     });
 
     //Tarifications
-    Route::prefix('tarification')->group(function () {
+    Route::prefix('movement')->group(function () {
+        Route::get('other', OtherMovement::class)->name('movement.other');
+    });
+
+     //Tarifications
+     Route::prefix('tarification')->group(function () {
         Route::get('cost', CostTarification::class)->name('tarification.cost.general');
     });
 

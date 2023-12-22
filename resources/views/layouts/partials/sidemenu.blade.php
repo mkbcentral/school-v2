@@ -1,14 +1,16 @@
 <aside class="main-sidebar sidebar-dark-primary  elevation-4">
     <a href="/" class="brand-link">
-        @if(Auth::user()->school)
-            <img src="{{asset('Vector-white.svg')}}" alt="Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light text-upercase">{{config('app.name')}}</span>
-        @else
-            <img src="{{asset('Vector-white.svg')}}" alt="Logo" class="brand-image img-circle elevation-3"
-                 style="opacity: .8">
-            <span class="brand-text font-weight-light text-upercase">{{config('app.name')}}</span>
-        @endif
+       @auth
+       @if(Auth::user()->school)
+       <img src="{{asset('Vector-white.svg')}}" alt="Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+       <span class="brand-text font-weight-light text-upercase">{{config('app.name')}}</span>
+   @else
+       <img src="{{asset('Vector-white.svg')}}" alt="Logo" class="brand-image img-circle elevation-3"
+            style="opacity: .8">
+       <span class="brand-text font-weight-light text-upercase">{{config('app.name')}}</span>
+   @endif
+       @endauth
     </a>
     <div class="sidebar">
         <nav class="mt-2">

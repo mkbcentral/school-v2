@@ -44,7 +44,6 @@
                                                 <span class="error text-danger">{{ $message }}</span>
                                             @enderror
                                         </div>
-
                                     </div>
                                 </div>
                                 <h4 class="mt-2 text-info text-bold">Montant à payer: {{ $amountLabel }}

@@ -3,17 +3,20 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CostInscriptionResource\Pages;
-use App\Filament\Resources\CostInscriptionResource\RelationManagers;
-use ers\SchoolHelper;
+use App\Livewire\Helpers\SchoolHelper;
 use App\Models\CostInscription;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Table;
 
 class CostInscriptionResource extends Resource
 {
@@ -36,12 +39,12 @@ class CostInscriptionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+               TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('amount')
+               TextInput::make('amount')
                     ->required(),
-                Forms\Components\Toggle::make('active')
+               Toggle::make('active')
                     ->required(),
             ]);
     }
@@ -50,19 +53,19 @@ class CostInscriptionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('amount')->sortable(),
-                Tables\Columns\ToggleColumn::make('active'),
+                TextColumn::make('name')->sortable()->searchable(),
+                TextColumn::make('amount')->sortable(),
+                ToggleColumn::make('active'),
             ])
             ->filters([
                 SelectFilter::make('Sections')->relationship('scolaryYear','name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

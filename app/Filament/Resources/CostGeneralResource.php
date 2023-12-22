@@ -3,17 +3,23 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\CostGeneralResource\Pages;
-use App\Filament\Resources\CostGeneralResource\RelationManagers;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\CostGeneral;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+
+;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
 
 class CostGeneralResource extends Resource
 {
@@ -39,17 +45,17 @@ class CostGeneralResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('amount')
+                TextInput::make('amount')
                     ->required(),
-                Forms\Components\Toggle::make('active')
+                Toggle::make('active')
                     ->required(),
-                Forms\Components\Select::make('type_other_cost_id')
+                Select::make('type_other_cost_id')
                     ->relationship('typeOtherCost','name')
                     ->preload(),
-                Forms\Components\Select::make('classe_option_id')
+                Select::make('classe_option_id')
                     ->relationship('classeOption','name')
                     ->preload(),
             ]);
@@ -59,10 +65,10 @@ class CostGeneralResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('classeOption.name')->sortable(),
-                Tables\Columns\TextColumn::make('amount')->sortable(),
-                Tables\Columns\IconColumn::make('active')->sortable()
+               TextColumn::make('name')->sortable()->searchable(),
+               TextColumn::make('classeOption.name')->sortable(),
+               TextColumn::make('amount')->sortable(),
+               IconColumn::make('active')->sortable()
                     ->boolean(),
 
             ])
@@ -71,11 +77,11 @@ class CostGeneralResource extends Resource
                 //SelectFilter::make('Scolaryear')->relationship('typeOtherCost','scolaryYear.name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+               DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

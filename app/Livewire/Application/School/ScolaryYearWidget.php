@@ -15,8 +15,11 @@ class ScolaryYearWidget extends Component
     }
 
     public function mount(){
-        $this->defaulScolaryYear=ScolaryYear::where('school_id',auth()->user()->school->id)
-                                            ?->where('active',true)?->first();
+        
+        if (auth()->user() != null) {
+            $this->defaulScolaryYear=ScolaryYear::where('school_id',auth()->user()->school->id)
+            ?->where('active',true)?->first();
+        }
     }
 
     public function render()

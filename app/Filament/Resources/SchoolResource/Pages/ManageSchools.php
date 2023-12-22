@@ -3,7 +3,9 @@
 namespace App\Filament\Resources\SchoolResource\Pages;
 
 use App\Filament\Resources\SchoolResource;
-use Filament\Pages\Actions;
+use Filament\Actions\CreateAction;
+
+;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageSchools extends ManageRecords
@@ -13,7 +15,7 @@ class ManageSchools extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

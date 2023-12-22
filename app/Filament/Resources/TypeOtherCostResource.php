@@ -3,17 +3,21 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\TypeOtherCostResource\Pages;
-use App\Filament\Resources\TypeOtherCostResource\RelationManagers;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\TypeOtherCost;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
 use Illuminate\Database\Eloquent\Builder;
 use Filament\Tables\Filters\SelectFilter;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Table;
 
 class TypeOtherCostResource extends Resource
 {
@@ -37,13 +41,13 @@ class TypeOtherCostResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('scolary_year_id')
+                Select::make('scolary_year_id')
                     ->relationship('scolaryYear','name')
                     ->preload(),
-                Forms\Components\Toggle::make('active')
+                Toggle::make('active')
                     ->required(),
             ]);
     }
@@ -52,19 +56,19 @@ class TypeOtherCostResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-                Tables\Columns\ToggleColumn::make('active'),
-                Tables\Columns\ToggleColumn::make('is_by_tranch')->label('Par tranche'),
+                TextColumn::make('name')->sortable()->searchable(),
+                ToggleColumn::make('active'),
+                ToggleColumn::make('is_by_tranch')->label('Par tranche'),
             ])
             ->filters([
                 SelectFilter::make('Sections')->relationship('scolaryYear','name'),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

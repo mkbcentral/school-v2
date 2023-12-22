@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\ClasseOptionResource\Pages;
 
 use App\Filament\Resources\ClasseOptionResource;
-use Filament\Pages\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageClasseOptions extends ManageRecords
@@ -13,7 +13,7 @@ class ManageClasseOptions extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

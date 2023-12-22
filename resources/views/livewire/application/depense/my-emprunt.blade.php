@@ -1,3 +1,3 @@
 <div>
-    @livewire('application.depense.list-emprunt')
+    @livewire('application.depense.list-emprunt')&/
 </div>

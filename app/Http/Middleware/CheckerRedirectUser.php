@@ -75,7 +75,8 @@ class CheckerRedirectUser
                 'rapport.payment.cost.etat',
                 'inscription.list.by.classe',
                 'print.list.inscription.by.classe',
-                'depense.emprunt'
+                'depense.emprunt',
+                'movement.other'
             ],
             'Secretary'=>[
                 'main',

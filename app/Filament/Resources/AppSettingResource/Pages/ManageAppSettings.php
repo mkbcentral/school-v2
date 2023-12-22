@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\AppSettingResource\Pages;
 
 use App\Filament\Resources\AppSettingResource;
-use Filament\Pages\Actions;
+use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageAppSettings extends ManageRecords
@@ -13,7 +13,7 @@ class ManageAppSettings extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }

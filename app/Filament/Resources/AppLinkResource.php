@@ -4,16 +4,15 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\AppLinkResource\Pages;
 use App\Filament\Resources\AppLinkResource\Pages\ManageAppLinks;
-use App\Filament\Resources\AppLinkResource\RelationManagers;
 use App\Models\AppLink;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Filament\Tables\Actions\AttachAction;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Table;
 
 class AppLinkResource extends Resource
 {
@@ -29,13 +28,13 @@ class AppLinkResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('icon')
+                TextInput::make('icon')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('color')
+                TextInput::make('color')
                     ->maxLength(255),
-                Forms\Components\TextInput::make('link')
+                TextInput::make('link')
                     ->maxLength(255),
             ]);
     }
@@ -44,20 +43,20 @@ class AppLinkResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('icon'),
-                Tables\Columns\TextColumn::make('color'),
-                Tables\Columns\TextColumn::make('link'),
+                TextColumn::make('name'),
+                TextColumn::make('icon'),
+                TextColumn::make('color'),
+                TextColumn::make('link'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make()
+                EditAction::make(),
+                DeleteAction::make()
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

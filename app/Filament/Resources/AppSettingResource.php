@@ -3,15 +3,17 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\AppSettingResource\Pages;
-use App\Filament\Resources\AppSettingResource\RelationManagers;
 use App\Models\AppSetting;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Actions\DeleteBulkAction;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Table;
 
 class AppSettingResource extends Resource
 {
@@ -25,11 +27,11 @@ class AppSettingResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('app_name')
+                TextInput::make('app_name')
                     ->maxLength(255),
-                Forms\Components\Toggle::make('is_sidebar_collapse')
+                Toggle::make('is_sidebar_collapse')
                     ->required(),
-                Forms\Components\Toggle::make('is_dark_mode')
+                Toggle::make('is_dark_mode')
                     ->required(),
             ]);
     }
@@ -38,19 +40,19 @@ class AppSettingResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('app_name'),
-                Tables\Columns\ToggleColumn::make('is_sidebar_collapse'),
-                Tables\Columns\ToggleColumn::make('is_dark_mode')
+                TextColumn::make('app_name'),
+                ToggleColumn::make('is_sidebar_collapse'),
+                ToggleColumn::make('is_dark_mode')
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+                EditAction::make(),
+                DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+                DeleteBulkAction::make(),
             ]);
     }
 

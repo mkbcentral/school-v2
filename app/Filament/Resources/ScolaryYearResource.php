@@ -3,15 +3,19 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ScolaryYearResource\Pages;
-use App\Filament\Resources\ScolaryYearResource\RelationManagers;
 use App\Models\ScolaryYear;
-use Filament\Forms;
-use Filament\Resources\Form;
+use Filament\Tables\Actions\DeleteAction;
+use Filament\Tables\Actions\DeleteBulkAction;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
-use Filament\Resources\Table;
-use Filament\Tables;
+use Filament\Tables\Actions\EditAction;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Columns\ToggleColumn;
+use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 
 class ScolaryYearResource extends Resource
@@ -34,12 +38,12 @@ class ScolaryYearResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Select::make('school_id')
+                Select::make('school_id')
                     ->relationship('school', 'name'),
-                Forms\Components\TextInput::make('name')
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Toggle::make('active')
+                Toggle::make('active')
                     ->required(),
             ]);
     }
@@ -48,21 +52,21 @@ class ScolaryYearResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('school.name')->label('Ecole'),
-                Tables\Columns\TextColumn::make('name')->label('Année scolaire'),
-                Tables\Columns\ToggleColumn::make('active')->label('Status'),
-                Tables\Columns\ToggleColumn::make('is_last_year')->label('Année ppasse'),
-                Tables\Columns\ToggleColumn::make('is_old_year')->label('Ancienne année'),
+                TextColumn::make('school.name')->label('Ecole'),
+                TextColumn::make('name')->label('Année scolaire'),
+                ToggleColumn::make('active')->label('Status'),
+                ToggleColumn::make('is_last_year')->label('Année ppasse'),
+                ToggleColumn::make('is_old_year')->label('Ancienne année'),
             ])
             ->filters([
                 //
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
-                Tables\Actions\DeleteAction::make(),
+               EditAction::make(),
+               DeleteAction::make(),
             ])
             ->bulkActions([
-                Tables\Actions\DeleteBulkAction::make(),
+               DeleteBulkAction::make(),
             ]);
     }
 

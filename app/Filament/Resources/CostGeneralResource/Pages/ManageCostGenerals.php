@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\CostGeneralResource\Pages;
 
 use App\Filament\Resources\CostGeneralResource;
+use Filament\Actions\CreateAction;
 use Filament\Pages\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
@@ -13,7 +14,7 @@ class ManageCostGenerals extends ManageRecords
     protected function getActions(): array
     {
         return [
-            Actions\CreateAction::make(),
+            CreateAction::make(),
         ];
     }
 }
