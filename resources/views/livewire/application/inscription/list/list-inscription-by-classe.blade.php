@@ -1,6 +1,7 @@
 <div>
     @livewire('application.inscription.forms.edit-inscription-form')
     @livewire('application.inscription.forms.edit-classe-and-inscription')
+    @livewire('application.payment.widget.list-payments-by-student-widget')
     <div>
         <div class="content-header">
             <div class="container-fluid">
@@ -62,11 +63,15 @@
                     </td>
                     <td class="text-center">
                         @can('valid-payment')
+                        <x-form.button wire:click='getInscription({{ $inscription }})' class="btn-sm text-info"
+                            type="button" data-toggle="modal" data-target="#paymentsByStudent">
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </x-form.button>
                         <x-form.button wire:click='editInscription({{ $inscription }})' class="btn-sm text-secondary"
                             type="button" data-toggle="modal" data-target="#editClasseAnInscription">
                             <i class="fa fa-cog" aria-hidden="true"></i>
                         </x-form.button>
-                        <x-form.button wire:click='edit({{ $inscription }})' class="btn-sm" type="button"
+                        <x-form.button wire:click='edit({{ $inscription->student  }})' class="btn-sm" type="button"
                             data-toggle="modal" data-target="#formEditInscriptionModal">
                             <i class="fas fa-edit text-primary"></i>
                         </x-form.button>
