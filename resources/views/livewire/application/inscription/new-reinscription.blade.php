@@ -26,12 +26,12 @@
                         <div class="card-header">
                             <div class="d-flex justify-content-between align-items-center">
                                 <h4 class="text-uppercase text-bold">LISTE DES ANCIENS ELEVES</h4>
-                            <x-search-input />
+                                <x-form.search-input />
                             </div>
                         </div>
                         <div class="card-body">
                             @if ($studentList->isEmpty())
-                                <x-data-empty />
+                            <x-data-empty />
                             @else
                             <table class="table table-stripped table-sm">
                                 <thead class="bg-primary">
@@ -44,24 +44,23 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($studentList as $student)
-                                        <tr>
-                                            <td>{{ $student->name }}
-                                            </td>
+                                    <tr>
+                                        <td>{{ $student->name }}
+                                        </td>
 
-                                            <td class="text-center">
-                                                {{ $student->gender }}
-                                            </td>
-                                            <td class="text-center">
-                                                {{ $student->getAge($student->date_of_birth) }}
-                                            </td>
-                                            <td class="text-center">
-                                                <x-form.button wire:click='show({{ $student }})'
-                                                    class="btn-sm" type="button" data-toggle="modal"
-                                                    data-target="#newReinscription">
-                                                    <i class="fas fa-user-plus text-primary"></i>
-                                                </x-form.button>
-                                            </td>
-                                        </tr>
+                                        <td class="text-center">
+                                            {{ $student->gender }}
+                                        </td>
+                                        <td class="text-center">
+                                            {{ $student->getAge($student->date_of_birth) }}
+                                        </td>
+                                        <td class="text-center">
+                                            <x-form.button wire:click='show({{ $student }})' class="btn-sm"
+                                                type="button" data-toggle="modal" data-target="#newReinscription">
+                                                <i class="fas fa-user-plus text-primary"></i>
+                                            </x-form.button>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
