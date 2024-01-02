@@ -20,6 +20,8 @@ class BankDepositView extends Component
     #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
+    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
+    public  $created_at;
 
     public BankDeposit $bankDeposit;
     public bool $isEditing = false;
@@ -49,6 +51,7 @@ class BankDepositView extends Component
         $this->amount = $bankDeposit->amount;
         $this->currency_id = $bankDeposit->currency_id;
         $this->month_name = $bankDeposit->month_name;
+        $this->created_at=$bankDeposit->created_at->format('Y-m-d');
         $this->formLabel='EDITION DEPOT';
     }
 
@@ -59,6 +62,7 @@ class BankDepositView extends Component
             $this->bankDeposit->month_name = $this->month_name;
             $this->bankDeposit->currency_id = $this->currency_id;
             $this->bankDeposit->amount = $this->amount;
+            $this->bankDeposit->created_at = $this->created_at;
             $this->bankDeposit->update();
             $this->dispatch('updated', ['message' => 'Action bien réalisée']);
             $this->amount = '';

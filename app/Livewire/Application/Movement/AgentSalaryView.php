@@ -16,10 +16,10 @@ class AgentSalaryView extends Component
     public string $amount = '';
     #[Rule('required', message: 'Mois obligation', onUpdate: false)]
     public string $month_name = '';
-    #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
-
+    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
+    public  $created_at;
     public AgentSalary $agentSalary;
     public bool $isEditing = false;
     public string $formLabel='NOUVEAU MOUVEAU SALAIRE';
@@ -48,6 +48,7 @@ class AgentSalaryView extends Component
         $this->amount = $agentSalary->amount;
         $this->currency_id = $agentSalary->currency_id;
         $this->month_name = $agentSalary->month_name;
+        $this->created_at=$agentSalary->created_at->format('Y-m-d');
         $this->formLabel='EDITION MOUVEMENT SALAIRE';
     }
 
@@ -58,6 +59,7 @@ class AgentSalaryView extends Component
             $this->agentSalary->month_name = $this->month_name;
             $this->agentSalary->currency_id = $this->currency_id;
             $this->agentSalary->amount = $this->amount;
+            $this->agentSalary->created_at = $this->created_at;
             $this->agentSalary->update();
             $this->dispatch('updated', ['message' => 'Action bien réalisée']);
             $this->amount = '';

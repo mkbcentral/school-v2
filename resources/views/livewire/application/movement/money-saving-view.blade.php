@@ -89,7 +89,15 @@
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        @if ($isEditing)
+                        <div class="form-group">
+                            <x-form.label value="{{ __('Date création') }}" />
+                            <x-form.input class="" type='date' wire:model='created_at' />
+                            @error('created_at')
+                                <span class="error text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        @endif
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <x-form.button type="submit" class="btn btn-primary">

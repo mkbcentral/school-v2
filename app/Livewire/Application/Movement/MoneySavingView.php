@@ -19,6 +19,8 @@ class MoneySavingView extends Component
     #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
+    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
+    public  $created_at;
 
     public MoneySaving $moneySaving;
     public bool $isEditing = false;
@@ -48,6 +50,7 @@ class MoneySavingView extends Component
         $this->amount = $moneySaving->amount;
         $this->currency_id = $moneySaving->currency_id;
         $this->month_name = $moneySaving->month_name;
+        $this->created_at=$moneySaving->created_at->format('Y-m-d');
         $this->formLabel='EDITION DEPOT';
     }
 
@@ -58,6 +61,7 @@ class MoneySavingView extends Component
             $this->moneySaving->month_name = $this->month_name;
             $this->moneySaving->currency_id = $this->currency_id;
             $this->moneySaving->amount = $this->amount;
+            $this->moneySaving->created_at = $this->created_at;
             $this->moneySaving->update();
             $this->dispatch('updated', ['message' => 'Action bien réalisée']);
             $this->amount = '';
