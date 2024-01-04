@@ -19,7 +19,8 @@ class MoneySavingView extends Component
     #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
-    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
+
+
     public  $created_at;
 
     public MoneySaving $moneySaving;

@@ -20,16 +20,18 @@ class BankDepositView extends Component
     #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
-    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
+
+
     public  $created_at;
 
     public BankDeposit $bankDeposit;
     public bool $isEditing = false;
-    public string $formLabel='NOUVEAU DEPOT';
+    public string $formLabel = 'NOUVEAU DEPOT';
 
     public function store()
     {
         $this->validate();
+
         try {
             BankDeposit::create([
                 'month_name' => $this->month_name,
@@ -51,8 +53,8 @@ class BankDepositView extends Component
         $this->amount = $bankDeposit->amount;
         $this->currency_id = $bankDeposit->currency_id;
         $this->month_name = $bankDeposit->month_name;
-        $this->created_at=$bankDeposit->created_at->format('Y-m-d');
-        $this->formLabel='EDITION DEPOT';
+        $this->created_at = $bankDeposit->created_at->format('Y-m-d');
+        $this->formLabel = 'EDITION DEPOT';
     }
 
     public function update()
@@ -68,8 +70,8 @@ class BankDepositView extends Component
             $this->amount = '';
             $this->currency_id = '';
             $this->month_name = '';
-            $this->formLabel='NOUVEAU DEPOT';
-            $this->isEditing=false;
+            $this->formLabel = 'NOUVEAU DEPOT';
+            $this->isEditing = false;
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
@@ -87,9 +89,9 @@ class BankDepositView extends Component
 
     public function handlerSubmit()
     {
-        if ($this->isEditing==false) {
+        if ($this->isEditing == false) {
             $this->store();
-        }else{
+        } else {
             $this->update();
         }
     }

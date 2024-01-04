@@ -11,14 +11,9 @@ use Livewire\Component;
 
 class AgentSalaryView extends Component
 {
-    #[Rule('required', message: 'Montant obligation', onUpdate: false)]
-    #[Rule('numeric', message: 'Le montant doit être numerique', onUpdate: false)]
-    public string $amount = '';
+
     #[Rule('required', message: 'Mois obligation', onUpdate: false)]
     public string $month_name = '';
-    #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
-    public string $currency_id = '';
-    #[Rule('date', message: 'Ce champs doit être une date', onUpdate: false)]
     public  $created_at;
     public AgentSalary $agentSalary;
     public bool $isEditing = false;
@@ -30,10 +25,8 @@ class AgentSalaryView extends Component
         try {
             AgentSalary::create([
                 'month_name' => $this->month_name,
-                'amount' => $this->amount,
                 'number' => rand(10000, 100000),
                 'school_id' => Auth::user()->id,
-                'currency_id' => $this->currency_id
             ]);
             $this->dispatch('added', ['message' => 'Action bien réalisée']);
         } catch (Exception $ex) {
@@ -45,11 +38,14 @@ class AgentSalaryView extends Component
     {
         $this->agentSalary = $agentSalary;
         $this->isEditing = true;
-        $this->amount = $agentSalary->amount;
-        $this->currency_id = $agentSalary->currency_id;
         $this->month_name = $agentSalary->month_name;
         $this->created_at=$agentSalary->created_at->format('Y-m-d');
         $this->formLabel='EDITION MOUVEMENT SALAIRE';
+    }
+
+    public function show(AgentSalary $agentSalary)
+    {
+        $this->dispatch('agentSalaryData',$agentSalary);
     }
 
     public function update()
@@ -57,13 +53,9 @@ class AgentSalaryView extends Component
         $this->validate();
         try {
             $this->agentSalary->month_name = $this->month_name;
-            $this->agentSalary->currency_id = $this->currency_id;
-            $this->agentSalary->amount = $this->amount;
             $this->agentSalary->created_at = $this->created_at;
             $this->agentSalary->update();
             $this->dispatch('updated', ['message' => 'Action bien réalisée']);
-            $this->amount = '';
-            $this->currency_id = '';
             $this->month_name = '';
             $this->formLabel='NOUVEAU DEPOT';
             $this->isEditing=false;

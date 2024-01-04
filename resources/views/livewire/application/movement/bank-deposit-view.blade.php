@@ -37,7 +37,7 @@
                                         </x-form.button>
                                         <x-form.button wire:click='delete({{ $bankDeposit }})'
                                             class="btn-sm text-danger"
-                                            wire:confirm="Are you sure you want to delete this post?" type="button">
+                                            wire:confirm="Etes-vous sûre de supprimer??" type="button">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </x-form.button>
                                     </td>

@@ -130,4 +130,31 @@
             @endif
         </tbody>
     </table>
+    @push('js')
+    <script type="module">
+        //Confirmation dialog for delete role
+        window.addEventListener('delete-depense-dialog', event => {
+            Swal.fire({
+                title: 'Voulez-vous vraimant ',
+                text: "supprimer ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('deleteDepenseListner');
+                }
+            })
+        })
+        window.addEventListener('depense-deleted', event => {
+            Swal.fire(
+                'Oprétion !',
+                event.detail[0].message,
+                'success'
+            );
+        });
+    </script>
+    @endpush
 </div>
