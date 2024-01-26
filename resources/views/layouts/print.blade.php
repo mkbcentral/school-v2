@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,7 +10,10 @@
         .center {
             text-align: center;
         }
-        table, td, th {
+
+        table,
+        td,
+        th {
             border: 1px solid black;
             font-size: 14px;
         }
@@ -18,10 +22,11 @@
             width: 100%;
             border-collapse: collapse;
         }
-
     </style>
 </head>
+
 <body>
-{{$slot}}
+    {{ $slot }}
 </body>
+
 </html>

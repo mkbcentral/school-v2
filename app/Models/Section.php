@@ -47,7 +47,7 @@ class Section extends Model
             ->join('classe_options', 'classe_options.id', 'cost_generals.classe_option_id')
             ->join('sections', 'sections.id', 'classe_options.section_id')
             ->where('sections.id', $this->id)
-            ->where('type_other_costs.id',$idType)
+            ->where('type_other_costs.id', $idType)
             ->sum('cost_generals.amount');
         return $amount;
     }

@@ -17,8 +17,8 @@
             <h4 class="mr-1">Filtrer/Mois</h4>
             <select class="form-control" wire:model.live='month' id="">
                 @foreach ($months as $m)
-                    <option value="{{ $m }}">{{ app_get_month_name($m) }}
-                    </option>
+                <option value="{{ $m }}">{{ app_get_month_name($m) }}
+                </option>
                 @endforeach
             </select>
 
@@ -37,7 +37,7 @@
                     <option value="">Tous</option>
                     <option value="">Source</option>
                     @foreach ($listDepenseSource as $source)
-                        <option value="{{ $source->name }}">{{ $source->name }}</option>
+                    <option value="{{ $source->name }}">{{ $source->name }}</option>
                     @endforeach
                 </select>
             </div>
@@ -46,7 +46,7 @@
                     <option value="">Tous</option>
                     <option value="">Catégorie...</option>
                     @foreach ($listCategoryDepense as $category)
-                        <option value="{{ $category->name }}">{{ $category->name }}</option>
+                    <option value="{{ $category->name }}">{{ $category->name }}</option>
                     @endforeach
 
                 </select>
@@ -56,7 +56,7 @@
                     <option value="">Tous</option>
                     <option value="">Dévise</option>
                     @foreach ($currencyList as $currency)
-                        <option value="{{ $currency->currency }}">{{ $currency->currency }}</option>
+                    <option value="{{ $currency->currency }}">{{ $currency->currency }}</option>
                     @endforeach
 
                 </select>
@@ -77,57 +77,83 @@
         </thead>
         <tbody>
             @if ($listDepense->isEmpty())
-                <tr>
-                    <td colspan="6" class="text-center text-success">
-                        <i class="fa fa-database" aria-hidden="true"></i>
-                        Aucune donnée trouvée !
-                    </td>
-                </tr>
+            <tr>
+                <td colspan="6" class="text-center text-success">
+                    <i class="fa fa-database" aria-hidden="true"></i>
+                    Aucune donnée trouvée !
+                </td>
+            </tr>
             @else
-                @foreach ($listDepense as $index => $depense)
-                    <tr>
-                        <td scope="row">{{ $index + 1 }}</td>
-                        <td>{{ $depense->created_at->format('d/m/Y') }}</td>
-                        <td>{{ $depense->name }}</td>
-                        <td>{{ $depense->source }}</td>
-                        <td class="text-right">
-                            @if ($depense->currency_name == 'USD')
-                                {{ app_format_number($depense->amount) }} $
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td class="text-right">
-                            @if ($depense->currency_name == 'CDF')
-                                {{ app_format_number($depense->amount) }} FC
-                            @else
-                                -
-                            @endif
-                        </td>
-                        <td class="text-center">
-                            <x-form.button wire:click='edit({{ $depense }},{{ $depense->id }})'
-                                class="text-primary" data-toggle="modal" data-target="#formDepenseModal" type="button">
-                                <span wire:loading wire:target="edit({{ $depense }},{{ $depense->id }})"
-                                    class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i class="fa fa-edit" aria-hidden="true"></i>
-                            </x-form.button>
-                            <x-form.button wire:click='show({{ $depense }},{{ $depense->id }})'
-                                class="text-primary" data-toggle="modal" data-target="#listRetourCaisseModal"
-                                type="button">
-                                <span wire:loading wire:target="edit({{ $depense }},{{ $depense->id }})"
-                                    class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i class="fa fa-user-plus" aria-hidden="true"></i>
-                            </x-form.button>
-                            <x-form.button wire:click='showDeleteDialog({{ $depense->id }})' class="text-danger"
-                                type="button">
-                                <span wire:loading wire:target="delete({{ $depense->id }})"
-                                    class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </x-form.button>
-                        </td>
-                    </tr>
-                @endforeach
+            @foreach ($listDepense as $index => $depense)
+            <tr>
+                <td scope="row">{{ $index + 1 }}</td>
+                <td>{{ $depense->created_at->format('d/m/Y') }}</td>
+                <td>{{ $depense->name }}</td>
+                <td>{{ $depense->source }}</td>
+                <td class="text-right">
+                    @if ($depense->currency_name == 'USD')
+                    {{ app_format_number($depense->amount) }} $
+                    @else
+                    -
+                    @endif
+                </td>
+                <td class="text-right">
+                    @if ($depense->currency_name == 'CDF')
+                    {{ app_format_number($depense->amount) }} FC
+                    @else
+                    -
+                    @endif
+                </td>
+                <td class="text-center">
+                    <x-form.button wire:click='edit({{ $depense }},{{ $depense->id }})' class="text-primary"
+                        data-toggle="modal" data-target="#formDepenseModal" type="button">
+                        <span wire:loading wire:target="edit({{ $depense }},{{ $depense->id }})"
+                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <i class="fa fa-edit" aria-hidden="true"></i>
+                    </x-form.button>
+                    <x-form.button wire:click='show({{ $depense }},{{ $depense->id }})' class="text-primary"
+                        data-toggle="modal" data-target="#listRetourCaisseModal" type="button">
+                        <span wire:loading wire:target="edit({{ $depense }},{{ $depense->id }})"
+                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </x-form.button>
+                    <x-form.button wire:click='showDeleteDialog({{ $depense->id }})' class="text-danger" type="button">
+                        <span wire:loading wire:target="delete({{ $depense->id }})"
+                            class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <i class="fa fa-trash" aria-hidden="true"></i>
+                    </x-form.button>
+                </td>
+            </tr>
+            @endforeach
             @endif
         </tbody>
     </table>
+
+    @push('js')
+    <script type="module">
+        //Confirmation dialog for delete role
+        window.addEventListener('delete-depense-dialog', event => {
+            Swal.fire({
+                title: 'Voulez-vous vraimant ',
+                text: "supprimer ?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Livewire.dispatch('deleteDepenseListner');
+                }
+            })
+        })
+        window.addEventListener('depense-deleted', event => {
+            Swal.fire(
+                'Oprétion !',
+                event.detail[0].message,
+                'success'
+            );
+        });
+    </script>
+    @endpush
 </div>

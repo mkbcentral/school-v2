@@ -83,7 +83,7 @@ class ListDepense extends Component
         try {
             $depense = DepenseHelper::show($this->depenseId);
             DepenseHelper::delete($depense);
-            $this->dispatch('depense-dialog-deleted', ['message' => "Action bien réalisée !"]);
+            $this->dispatch('depense-deleted', ['message' => "Action bien réalisée !"]);
         } catch (\Exception $ex) {
             $this->dispatch('error',  $ex->getMessage());
         }
