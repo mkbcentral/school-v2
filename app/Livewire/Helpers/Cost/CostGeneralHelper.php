@@ -3,6 +3,7 @@
 namespace App\Livewire\Helpers\Cost;
 
 use App\Models\CostGeneral;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class CostGeneralHelper
@@ -24,15 +25,15 @@ class CostGeneralHelper
         return $listOtherCost;
     }
 
-    public function getListCostGeneralByScolaryYEar($defaultScolaryYerId,string $keyTosearch=''): Collection
+    public function getListCostGeneralByScolaryYEar($defaultScolaryYerId, string $keyTosearch = '', $is_paginate = false): Collection|LengthAwarePaginator
     {
-        $listOtherCost =
+        $listOtherCost = $is_paginate == false ?
             CostGeneral::join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
             ->leftJoin('classe_options', 'classe_options.id', '=', 'cost_generals.classe_option_id')
             ->join('currencies', 'currencies.id', '=', 'cost_generals.currency_id')
             ->where('type_other_costs.school_id', auth()->user()->school->id)
             ->where('type_other_costs.scolary_year_id', $defaultScolaryYerId)
-            ->where('cost_generals.name','like','%'.$keyTosearch.'%')
+            ->where('cost_generals.name', 'like', '%' . $keyTosearch . '%')
             ->select(
                 'cost_generals.*',
                 'type_other_costs.name as type',
@@ -40,7 +41,21 @@ class CostGeneralHelper
                 'currencies.currency as currency_name'
             )
             ->orderBy('cost_generals.name', 'asc')
-            ->get();
+            ->get() :
+            CostGeneral::join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
+            ->leftJoin('classe_options', 'classe_options.id', '=', 'cost_generals.classe_option_id')
+            ->join('currencies', 'currencies.id', '=', 'cost_generals.currency_id')
+            ->where('type_other_costs.school_id', auth()->user()->school->id)
+            ->where('type_other_costs.scolary_year_id', $defaultScolaryYerId)
+            ->where('cost_generals.name', 'like', '%' . $keyTosearch . '%')
+            ->select(
+                'cost_generals.*',
+                'type_other_costs.name as type',
+                'classe_options.name as option',
+                'currencies.currency as currency_name'
+            )
+            ->orderBy('cost_generals.name', 'asc')
+            ->paginate(10);
         return $listOtherCost;
     }
 

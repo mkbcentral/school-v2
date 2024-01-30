@@ -20,7 +20,12 @@
                                     LISTE DES SOURCES
                                 </div>
                                 <div class="card-body">
-                                    <table class="table">
+                                    <div class="d-flex justify-content-center">
+                                        <div wire:loading class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered mt-2">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -34,18 +39,14 @@
                                                     <td scope="row">{{ $index + 1 }}</td>
                                                     <td>{{ $depenseSource->name }}</td>
                                                     <td class="text-center">
-                                                        <x-form.button wire:click='edit({{ $depenseSource }},{{ $depenseSource->id }})'
+                                                        <x-form.button
+                                                            wire:click='edit({{ $depenseSource }},{{ $depenseSource->id }})'
                                                             class="btn-sm text-primary" type="button">
-                                                            <span wire:loading wire:target="edit({{ $depenseSource }},{{ $depenseSource->id }})"
-                                                            class="spinner-border spinner-border-sm" role="status"
-                                                            aria-hidden="true"></span>
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </x-form.button>
                                                         <x-form.button wire:click='delete({{ $depenseSource->id }})'
+                                                            wire:confirm="Etes-vous sûre de supprimer?"
                                                             class="btn-sm text-danger" type="button">
-                                                            <span wire:loading wire:target="delete({{ $depenseSource->id }})"
-                                                            class="spinner-border spinner-border-sm" role="status"
-                                                            aria-hidden="true"></span>
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </x-form.button>
                                                     </td>
@@ -53,6 +54,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $listDepenseSource->links('vendor.livewire.bootstrap') }}
                                 </div>
                             </div>
                         </div>
@@ -74,6 +76,15 @@
                                             @error('name')
                                                 <span class="error text-danger">{{ $message }}</span>
                                             @enderror
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <x-form.label value="{{ __('Mois') }}" />
+                                                <x-widget.list-month wire:model='month_name' />
+                                                @error('month_name')
+                                                    <span class="error text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer text-muted">

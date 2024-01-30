@@ -2,6 +2,8 @@
 
 namespace App\Livewire\Application\Movement;
 
+use App\Livewire\Helpers\Movement\DepositBankHelper;
+use App\Livewire\Helpers\SchoolHelper;
 use App\Models\BankDeposit;
 use App\Models\Currency;
 use Exception;
@@ -20,22 +22,23 @@ class BankDepositView extends Component
     #[Rule('required', message: 'Devise obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Id devise doit être numeric', onUpdate: false)]
     public string $currency_id = '';
+    #[Rule('nullable')]
+    #[Rule('date', message: 'Date création invalide', onUpdate: false)]
+    public  $created_at;
 
     public BankDeposit $bankDeposit;
     public bool $isEditing = false;
-    public string $formLabel='NOUVEAU DEPOT';
+    public string $formLabel = 'NOUVEAU DEPOT';
 
     public function store()
     {
-        $this->validate();
+        $fields = $this->validate();
+
         try {
-            BankDeposit::create([
-                'month_name' => $this->month_name,
-                'amount' => $this->amount,
-                'number' => rand(10000, 100000),
-                'school_id' => Auth::user()->id,
-                'currency_id' => $this->currency_id
-            ]);
+            $fields['number'] = rand(10000, 100000);
+            $fields['scolary_year_id'] = (new SchoolHelper())->getCurrectScolaryYear()->id;
+            $fields['school_id'] = Auth::user()->id;
+            BankDeposit::create($fields);
             $this->dispatch('added', ['message' => 'Action bien réalisée']);
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
@@ -49,23 +52,27 @@ class BankDepositView extends Component
         $this->amount = $bankDeposit->amount;
         $this->currency_id = $bankDeposit->currency_id;
         $this->month_name = $bankDeposit->month_name;
-        $this->formLabel='EDITION DEPOT';
+        $this->created_at = $bankDeposit->created_at->format('Y-m-d');
+        $this->formLabel = 'EDITION DEPOT';
+    }
+
+    public function newBankDeposiMissing(BankDeposit $bankDeposit)
+    {
+        $this->dispatch('agentBankDeposit', $bankDeposit);
     }
 
     public function update()
     {
-        $this->validate();
+        $fields = $this->validate();
         try {
-            $this->bankDeposit->month_name = $this->month_name;
-            $this->bankDeposit->currency_id = $this->currency_id;
-            $this->bankDeposit->amount = $this->amount;
-            $this->bankDeposit->update();
+            $fields['scolary_year_id'] = (new SchoolHelper())->getCurrectScolaryYear()->id;
+            $this->bankDeposit->update($fields);
             $this->dispatch('updated', ['message' => 'Action bien réalisée']);
             $this->amount = '';
             $this->currency_id = '';
             $this->month_name = '';
-            $this->formLabel='NOUVEAU DEPOT';
-            $this->isEditing=false;
+            $this->formLabel = 'NOUVEAU DEPOT';
+            $this->isEditing = false;
         } catch (Exception $ex) {
             $this->dispatch('error', ['message' => $ex->getMessage()]);
         }
@@ -83,9 +90,9 @@ class BankDepositView extends Component
 
     public function handlerSubmit()
     {
-        if ($this->isEditing==false) {
+        if ($this->isEditing == false) {
             $this->store();
-        }else{
+        } else {
             $this->update();
         }
     }
@@ -93,8 +100,10 @@ class BankDepositView extends Component
     public function render()
     {
         return view('livewire.application.movement.bank-deposit-view', [
-            'listBankDeposit' => BankDeposit::all(),
-            'listCurrency' => Currency::all()
+            'listBankDeposit' => BankDeposit::where('scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)->get(),
+            'listCurrency' => Currency::all(),
+            'total_usd' => DepositBankHelper::getAmountDepositBank('USD'),
+            'total_cdf' => DepositBankHelper::getAmountDepositBank('CDF'),
         ]);
     }
 }

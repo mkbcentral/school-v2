@@ -1,7 +1,7 @@
 <div>
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="listCategoryDepenseModal" tabindex="-1" role="dialog" data-backdrop="static"
-        data-keyboard="false" aria-labelledby="listCategoryDepenseModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="listCategoryDepenseModal" tabindex="-1" role="dialog"
+        data-backdrop="static" data-keyboard="false" aria-labelledby="listCategoryDepenseModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -20,7 +20,12 @@
                                     LISTE DES SOURCES
                                 </div>
                                 <div class="card-body">
-                                    <table class="table">
+                                    <div class="d-flex justify-content-center">
+                                        <div wire:loading class="spinner-border text-primary" role="status">
+                                            <span class="sr-only">Loading...</span>
+                                        </div>
+                                    </div>
+                                    <table class="table table-bordered mt-2">
                                         <thead>
                                             <tr>
                                                 <th>#</th>
@@ -34,18 +39,14 @@
                                                     <td scope="row">{{ $index + 1 }}</td>
                                                     <td>{{ $categoryDepense->name }}</td>
                                                     <td class="text-center">
-                                                        <x-form.button wire:click='edit({{ $categoryDepense }},{{ $categoryDepense->id }})'
+                                                        <x-form.button
+                                                            wire:click='edit({{ $categoryDepense }},{{ $categoryDepense->id }})'
                                                             class="btn-sm text-primary" type="button">
-                                                            <span wire:loading wire:target="edit({{ $categoryDepense }},{{ $categoryDepense->id }})"
-                                                            class="spinner-border spinner-border-sm" role="status"
-                                                            aria-hidden="true"></span>
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </x-form.button>
                                                         <x-form.button wire:click='delete({{ $categoryDepense->id }})'
+                                                            wire:confirm="Etes-vous sûre de supprimer?"
                                                             class="btn-sm text-danger" type="button">
-                                                            <span wire:loading wire:target="delete({{ $categoryDepense->id }})"
-                                                            class="spinner-border spinner-border-sm" role="status"
-                                                            aria-hidden="true"></span>
                                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                                         </x-form.button>
                                                     </td>
@@ -53,6 +54,7 @@
                                             @endforeach
                                         </tbody>
                                     </table>
+                                    {{ $listCategoryDepense->links('vendor.livewire.bootstrap') }}
                                 </div>
                             </div>
                         </div>

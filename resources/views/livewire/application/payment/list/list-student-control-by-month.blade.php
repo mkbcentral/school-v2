@@ -10,7 +10,7 @@
             </div>
             <div class="form-group ml-2">
                 <x-form.label value="{{ __('Filtrer par classe') }}" />
-                <x-widget.list-classe-select-widget option='{{$classe_option_id}}' wire:model.live='classe_id' />
+                <x-widget.list-classe-select-widget option='{{ $classe_option_id }}' wire:model.live='classe_id' />
             </div>
         </div>
         <div class="d-flex justify-content-center"><x-widget.loading-circular-md /></div>
@@ -29,16 +29,16 @@
                 </thead>
                 <tbody>
                     @foreach ($listStudent as $index => $inscription)
-                    @php
-                        $status=$inscription->getByCurrentYearPaymentCheckerStatus(
-                                        $selectedIndex, $inscription->student->id, $month,$defaultScolaryYerId);
-                    @endphp
                         <tr>
-                            <td>{{$index+1}}</td>
+                            <td>{{ $index + 1 }}</td>
                             <td>{{ $inscription->student->name }}</td>
                             @foreach ($months as $month)
-                                <td class="text-center
-                                    {{ $status =='OK'?' bg-success':'bg-danger'}}">
+                                @php
+                                    $status = $inscription->getByCurrentYearPaymentCheckerStatus($selectedIndex, $inscription->student->id, $month, $defaultScolaryYerId);
+                                @endphp
+                                <td
+                                    class="text-center
+                                    {{ $status == 'OK' ? ' bg-success' : 'bg-danger' }}">
                                     {{ $status }}
                                 </td>
                             @endforeach

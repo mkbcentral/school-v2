@@ -5,7 +5,7 @@
             <h4 class="text-uppercase text-bold">LISTE DES ELEVES</h4>
         </div>
         <div class="card-body">
-            <x-form.search-input/>
+            <x-form.search-input wire:model.live='keySearch' />
             @if ($listInscription->isEmpty())
             <span class="text-success text-center p-4">
                 <h4><i class="fa fa-database" aria-hidden="true"></i>

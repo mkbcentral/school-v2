@@ -3,6 +3,7 @@
 namespace App\Livewire\Helpers\Payment;
 
 use App\Models\Payment;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class GetPaymentByMonthHelper
@@ -33,7 +34,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(25);
             } else {
                 $payments = Payment::join('students', 'students.id', '=', 'payments.student_id')
@@ -48,7 +49,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(25);
             }
         } else {
@@ -65,7 +66,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(25);
             } else {
                 $payments = Payment::join('students', 'students.id', '=', 'payments.student_id')
@@ -81,7 +82,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(25);
             }
         }
@@ -101,7 +102,7 @@ class GetPaymentByMonthHelper
                     ->where('students.school_id', auth()->user()->school->id)
                     ->orderBy('payments.created_at', 'DESC')
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(15);
             } else {
                 $payments = Payment::join('students', 'students.id', '=', 'payments.student_id')
@@ -116,7 +117,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(15);
             }
         } else {
@@ -133,7 +134,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(15);
             } else {
                 $payments = Payment::join('students', 'students.id', '=', 'payments.student_id')
@@ -149,7 +150,7 @@ class GetPaymentByMonthHelper
                     ->orderBy('payments.created_at', 'DESC')
                     ->where('payments.is_paid', true)
                     ->with(['cost.currency', 'student.studentResponsable', 'inscription.classe.classeOption', 'inscription.scolaryYear'])
-                    ->select('payments.*','cost_generals.amount as amount')
+                    ->select('payments.*', 'cost_generals.amount as amount')
                     ->paginate(15);
             }
         }
@@ -308,5 +309,22 @@ class GetPaymentByMonthHelper
             }
         }
         return $payments;
+    }
+
+    public static function getLatePayments($month, $next_month, $idSColaryYear, $type): Collection
+    {
+        return  Payment::join('cost_generals', 'cost_generals.id', '=', 'payments.cost_general_id')
+            ->join('rates', 'rates.id', '=', 'payments.rate_id')
+            ->where('payments.scolary_year_id', $idSColaryYear)
+            ->whereMonth('payments.created_at', $month)
+            ->where('payments.month_name', '!=', $month)
+            ->where('payments.month_name', '!=', $next_month)
+            ->where('cost_generals.type_other_cost_id', $type)
+            ->where('payments.school_id', auth()->user()->school->id)
+            ->orderBy('payments.created_at', 'DESC')
+            ->where('payments.is_paid', true)
+            ->with(['cost.currency', 'inscription.classe.classeOption', 'inscription'])
+            ->select('payments.*', 'cost_generals.amount as amount')
+            ->get();
     }
 }

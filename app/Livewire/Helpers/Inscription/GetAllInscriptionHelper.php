@@ -17,6 +17,7 @@ class GetAllInscriptionHelper
                 ->join('rates', 'rates.id', '=', 'inscriptions.rate_id')
                 ->where('inscriptions.scolary_year_id', $scolaryYearId)
                 ->where('students.name', 'LIKE', '%' . $keyTosearch . '%')
+                ->where('inscriptions.is_changed_classe', false)
                 ->orderBy('inscriptions.created_at', 'DESC')
                 ->with('Cost')
                 ->with('student')
@@ -31,6 +32,7 @@ class GetAllInscriptionHelper
                 ->where('inscriptions.scolary_year_id', $scolaryYearId)
                 ->where('inscriptions.classe_id', $classeId)
                 ->where('students.name', 'LIKE', '%' . $keyTosearch . '%')
+                ->where('inscriptions.is_changed_classe', false)
                 ->orderBy('inscriptions.created_at', 'DESC')
                 ->with('Cost')
                 ->with('student')
@@ -47,8 +49,9 @@ class GetAllInscriptionHelper
             ->join('cost_inscriptions', 'cost_inscriptions.id', '=', 'inscriptions.cost_inscription_id')
             ->where('inscriptions.scolary_year_id', (new SchoolHelper())->getCurrentScolaryYear()->id)
             ->where('students.name', 'LIKE', '%' . $keyTosearch . '%')
+            ->where('inscriptions.is_changed_classe', false)
             ->orderBy('students.name', 'ASC')
-            ->with(['cost','student','school','classe.classeOption'])
+            ->with(['cost', 'student', 'school', 'classe.classeOption'])
             ->select('inscriptions.*')
             ->paginate(15);
     }
@@ -60,8 +63,9 @@ class GetAllInscriptionHelper
             ->where('inscriptions.scolary_year_id', (new SchoolHelper())->getCurrentScolaryYear()->id)
             ->where('students.name', 'LIKE', '%' . $keyTosearch . '%')
             ->where('inscriptions.classe_id', $classeId)
+            ->where('inscriptions.is_changed_classe', false)
             ->orderBy('students.name', 'ASC')
-            ->with(['cost','student','school','classe.classeOption'])
+            ->with(['cost', 'student', 'school', 'classe.classeOption'])
             ->select('inscriptions.*')
             ->get();
     }

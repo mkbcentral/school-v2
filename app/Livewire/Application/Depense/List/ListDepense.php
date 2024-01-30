@@ -3,11 +3,13 @@
 namespace App\Livewire\Application\Depense\List;
 
 use App\Livewire\Helpers\DateFormatHelper;
-use App\Livewire\Helpers\Depense\CategoryDepenseHelser;
+use App\Livewire\Helpers\Depense\CategoryDepenseHelper;
 use App\Livewire\Helpers\Depense\DepenseHelper;
 use App\Livewire\Helpers\Depense\DepenseSourceHelper;
+use App\Livewire\Helpers\Depense\TypeDepenseHelper;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\Depense;
+use App\Models\DepenseSource;
 use Illuminate\Support\Collection;
 use Livewire\Component;
 
@@ -18,10 +20,7 @@ class ListDepense extends Component
     public bool $isByDate = true;
     public ?Depense $depense;
     public bool $isEditing = false;
-    public string $source = '', $category = '', $currency = '';
-    public ?Collection $currencyList;
-    public ?Collection $listDepense;
-    public ?Collection $listDepenseSource, $listCategoryDepense;
+    public string $source = '', $category = '', $currency = '', $type_depense_id;
     public string $depenseId;
     protected $listeners = [
         'refreshListDepense' => '$refresh',
@@ -94,20 +93,21 @@ class ListDepense extends Component
         $this->month = date('m');
         $this->date = date('Y-m-d');
         $this->months = (new DateFormatHelper())->getMonthsForScolaryYear();
-        $this->currencyList = SchoolHelper::getCurrencyList();
-        $this->listDepenseSource = DepenseSourceHelper::get();
-        $this->listCategoryDepense = CategoryDepenseHelser::get();
+        $this->type_depense_id = TypeDepenseHelper::getSchoolType()->id;
     }
 
     public function render()
     {
-        if ($this->isByDate == true) {
-            $this->listDepense = DepenseHelper::getDate($this->date, $this->currency, $this->source, $this->category);
-        } else {
-            $this->listDepense = DepenseHelper::get($this->month, $this->currency, $this->source, $this->category);
-        }
-        //dd(DepenseHelper::getAmountByMonthAndByCurrency('08','USD',4));
         $this->dispatch('getMonthDepense', $this->month);
-        return view('livewire.application.depense.list.list-depense');
+        return view('livewire.application.depense.list.list-depense', [
+            'listTypeDepense' => TypeDepenseHelper::getNotPaginate(),
+            'listDepense' => $this->isByDate == true
+                ? DepenseHelper::getByDate($this->date, $this->currency, $this->source, $this->category, $this->type_depense_id)
+                : DepenseHelper::getByMonth($this->month, $this->currency, $this->source, $this->category, $this->type_depense_id),
+            'currencyList' => SchoolHelper::getCurrencyList(),
+            'listDepenseSource' => DepenseSourceHelper::getNotPaginate(),
+            'listCategoryDepense' => CategoryDepenseHelper::getNotPaginate(),
+
+        ]);
     }
 }

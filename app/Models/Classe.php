@@ -33,10 +33,10 @@ class Classe extends Model
         return $this->hasMany(Inscription::class);
     }
     //getInscriptionsCountByClasseFroCurrentScolaryYear
-    public function getPaymentByClasseForCurrentYear($classeId,$typeCostId,$scolaryYearId)
+    public function getPaymentByClasseForCurrentYear($classeId, $typeCostId, $scolaryYearId)
     {
         $payment = Payment::join('cost_generals', 'cost_generals.id', '=', 'payments.cost_general_id')
-            ->join('type_other_costs', 'type_other_costs.id','=','cost_generals.type_other_cost_id')
+            ->join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
             ->where('payments.scolary_year_id', $scolaryYearId)
             ->where('payments.classe_id', $classeId)
             ->where('type_other_costs.id', $typeCostId)
@@ -45,11 +45,11 @@ class Classe extends Model
             ->first();
         return $payment?->cost?->amount;
     }
-    public function getPaymentCurrencyByClasseForCurrentYear($classeId,$typeCostId,$scolaryYearId)
+    public function getPaymentCurrencyByClasseForCurrentYear($classeId, $typeCostId, $scolaryYearId)
     {
         $payment = Payment::join('cost_generals', 'cost_generals.id', '=', 'payments.cost_general_id')
-            ->join('type_other_costs', 'type_other_costs.id','=','cost_generals.type_other_cost_id')
-            ->where('payments.scolary_year_id',$scolaryYearId)
+            ->join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
+            ->where('payments.scolary_year_id', $scolaryYearId)
             ->where('payments.classe_id', $classeId)
             ->where('type_other_costs.id', $typeCostId)
             ->where('payments.school_id', auth()->user()->school->id)
@@ -57,11 +57,11 @@ class Classe extends Model
             ->first();
         return $payment?->cost?->currency?->currency;
     }
-    public function getAmountPaymentByClasseForCurrentYearByMonth($classeId,$typeCostId,$month)
+    public function getAmountPaymentByClasseForCurrentYearByMonth($classeId, $typeCostId, $month)
     {
         $currentScolaryYear = (new SchoolHelper())->getCurrentScolaryYear();
         return Payment::join('cost_generals', 'cost_generals.id', '=', 'payments.cost_general_id')
-            ->join('type_other_costs', 'type_other_costs.id','=','cost_generals.type_other_cost_id')
+            ->join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
             ->where('payments.scolary_year_id', $currentScolaryYear->id)
             ->where('payments.classe_id', $classeId)
             ->where('type_other_costs.id', $typeCostId)
@@ -69,7 +69,20 @@ class Classe extends Model
             ->where('payments.school_id', auth()->user()->school->id)
             ->where('payments.is_paid', true)
             ->sum('cost_generals.amount');
+    }
 
+    public function getCountPaymentByClasseForCurrentYearByMonth($classeId, $typeCostId, $month)
+    {
+        $currentScolaryYear = (new SchoolHelper())->getCurrentScolaryYear();
+        return Payment::join('cost_generals', 'cost_generals.id', '=', 'payments.cost_general_id')
+            ->join('type_other_costs', 'type_other_costs.id', '=', 'cost_generals.type_other_cost_id')
+            ->where('payments.scolary_year_id', (new SchoolHelper())->getCurrentScolaryYear()->id)
+            ->where('payments.classe_id', $classeId)
+            ->where('type_other_costs.id', $typeCostId)
+            ->where('payments.month_name', $month)
+            ->where('payments.school_id', auth()->user()->school->id)
+            ->where('payments.is_paid', true)
+            ->count();
     }
 
     public function getInscriptionsCountByClasseFroCurrentScolaryYear($classeId)
@@ -79,9 +92,5 @@ class Classe extends Model
             ->where('inscriptions.classe_id', $classeId)
             ->orderBy('inscriptions.created_at', 'DESC')
             ->count();
-
-           
     }
-
-    
 }

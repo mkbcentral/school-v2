@@ -7,13 +7,13 @@ use Livewire\Component;
 
 class ApplicationLinkMenu extends Component
 {
-    public function makeLoadingState(){
-
+    public function makeLoadingState()
+    {
     }
     public function render()
     {
-        $appLinks=AppLink::inRandomOrder()
-        ->get();
-        return view('livewire.application.navigation.application-link-menu',['appLinks'=>$appLinks]);
+        $appLinks = AppLink::inRandomOrder()
+            ->get();
+        return view('livewire.application.navigation.application-link-menu', ['appLinks' => $appLinks]);
     }
 }

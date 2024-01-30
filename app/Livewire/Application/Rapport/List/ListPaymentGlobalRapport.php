@@ -3,21 +3,20 @@
 namespace App\Livewire\Application\Rapport\List;
 
 use App\Livewire\Helpers\Cost\CostGeneralHelper;
-use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Notifications\SmsNotificationHelper;
 use App\Livewire\Helpers\Payment\GetPaymentByDateHelper;
 use App\Livewire\Helpers\Payment\GetPaymentByMonthHelper;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\Inscription;
 use App\Models\Payment;
-use Illuminate\Support\Collection;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class ListPaymentGlobalRapport extends Component
 {
     use WithPagination;
-     
+
     public $selectedIndex;
     public $keyToSearch = '', $date_to_search;
     public $defaultScolaryYerId;
@@ -29,7 +28,7 @@ class ListPaymentGlobalRapport extends Component
     protected $listeners = [
         'paymentListRefresh' => '$refresh',
         'scolaryYearFresh' => 'getScolaryYear',
-        'deletePaymentListner'=>'delete',
+        'deletePaymentListner' => 'delete',
         'selectedIndexFresh' => 'getSelectedIndex'
     ];
 
@@ -89,13 +88,15 @@ class ListPaymentGlobalRapport extends Component
         $this->dispatch('paymentToEdit', $payment);
     }
 
-    public function showDeleteDialog(string $idPayment){
-        $this->idPayment=$idPayment;
+    public function showDeleteDialog(string $idPayment)
+    {
+        $this->idPayment = $idPayment;
         $this->dispatch('delete-payment-dialog');
     }
 
-    public function delete(){
-        $payment=Payment::find($this->idPayment);
+    public function delete()
+    {
+        $payment = Payment::find($this->idPayment);
         $payment->delete();
         $this->dispatch('payment-deleted', ['message' => "Payment bien rétiré !"]);
     }
@@ -126,7 +127,7 @@ class ListPaymentGlobalRapport extends Component
      */
     public function updateSoclyYearInscrption()
     {
-        $listPayments=GetPaymentByMonthHelper::getMonthPayments(
+        $listPayments = GetPaymentByMonthHelper::getMonthPayments(
             $this->month,
             $this->defaultScolaryYerId,
             $this->cost_id,

@@ -2,9 +2,11 @@
 
 namespace App\Livewire\Application\Depense\Form;
 
-use App\Livewire\Helpers\Depense\CategoryDepenseHelser;
+use App\Livewire\Helpers\Depense\CategoryDepenseHelper;
 use App\Livewire\Helpers\Depense\DepenseHelper;
 use App\Livewire\Helpers\Depense\DepenseSourceHelper;
+use App\Livewire\Helpers\Depense\TypeDepenseHelper;
+use App\Models\CategoryDepense;
 use App\Models\Currency;
 use App\Models\Depense;
 use App\Models\DepenseSource;
@@ -13,8 +15,8 @@ use Livewire\Component;
 
 class FormDepense extends Component
 {
-    public $name, $amount = 0, $currency_id, $depense_source_id,$category_depense_id,$created_at;
-    public Collection $listCurrency, $listDepenseSource,$listCategoryDepense;
+    public $name, $amount = 0, $currency_id, $depense_source_id, $category_depense_id, $created_at, $depense_type_id;
+    public Collection $listCurrency, $listDepenseSource, $listCategoryDepense;
     public ?Depense $depense;
     public bool $isEditing;
 
@@ -44,40 +46,43 @@ class FormDepense extends Component
     public function mount()
     {
         $this->listCurrency = Currency::all();
-        $this->listDepenseSource = DepenseSourceHelper::get();
-        $this->listCategoryDepense=CategoryDepenseHelser::get();
-        $this->created_at=date('Y-m-d');
-
+        $this->listDepenseSource = DepenseSourceHelper::getNotPaginate();
+        $this->listCategoryDepense = CategoryDepenseHelper::getNotPaginate();
+        $this->created_at = date('Y-m-d');
     }
     public function store()
     {
-        $inputs =$this->validateForm();
+        $inputs = $this->validateForm();
         DepenseHelper::create($inputs);
         $this->dispatch('refreshListDepense');
         $this->dispatch('added', ['message' => "Dépense bien créée !"]);
         $this->resetForm();
     }
 
-    public function update(){
-        $inputs =$this->validateForm();
-        DepenseHelper::update($this->depense,$inputs);
+    public function update()
+    {
+        $inputs = $this->validateForm();
+        DepenseHelper::update($this->depense, $inputs);
         $this->dispatch('refreshListDepense');
         $this->dispatch('updated', ['message' => "Dépense bien modifiée !"]);
         $this->resetForm();
     }
 
-    public function resetForm(){
+    public function resetForm()
+    {
         $this->name = '';
         $this->amount = '';
         $this->currency_id = '';
         $this->depense_source_id = '';
-        $this->created_at=date('Y-m-d');
+        $this->created_at = date('Y-m-d');
     }
-    public function validateForm():array{
+    public function validateForm(): array
+    {
         return $this->validate([
             'name' => ['required', 'string'],
             'amount' => ['required', 'numeric'],
             'currency_id' => ['required', 'numeric'],
+            'depense_type_id' => ['required', 'numeric'],
             'category_depense_id' => ['required', 'numeric'],
             'depense_source_id' => ['required', 'numeric'],
             'created_at' => ['required', 'date'],
@@ -89,6 +94,8 @@ class FormDepense extends Component
 
     public function render()
     {
-        return view('livewire.application.depense.form.form-depense');
+        return view('livewire.application.depense.form.form-depense', [
+            'listDepenseType' => TypeDepenseHelper::getNotPaginate()
+        ]);
     }
 }

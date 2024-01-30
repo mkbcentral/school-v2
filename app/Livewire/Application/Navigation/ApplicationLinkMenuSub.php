@@ -2,13 +2,14 @@
 
 namespace App\Livewire\Application\Navigation;
 
-use App\Models\SubAppLink;
 use Livewire\Component;
 
 class ApplicationLinkMenuSub extends Component
 {
-    public function makeLoadingState($link,$user){
-        $this->reset();
+
+    public function makeLoadingState($link, $user)
+    {
+        $this->dispatch('loadingState');
     }
 
     public function render()

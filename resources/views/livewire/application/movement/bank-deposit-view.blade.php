@@ -1,4 +1,5 @@
 <div>
+    @livewire('application.movement.bank-deposit-missing-view')
     @php
         $total = 0;
     @endphp
@@ -17,27 +18,41 @@
                             <tr>
                                 <th>#</th>
                                 <th>Numero</th>
-                                <th class="text-right">Montant</th>
+                                <th class="text-right">Montant USD</th>
+                                <th class="text-right">Montant CDF</th>
                                 <th class="text-right">Date mouvement</th>
-                                <th>Actions</th>
+                                <th class="text-center">Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($listBankDeposit as $index => $bankDeposit)
-                                <tr>
+                                <tr class="{{ $bankDeposit->bankDepositMissing != null ? 'bg-danger' : '' }}">
                                     <td>{{ $index + 1 }}</td>
                                     <td>{{ $bankDeposit->number . '-' . app_get_month_name($bankDeposit->month_name) }}
                                     </td>
-                                    <td class="text-right">{{ $bankDeposit->amount }}</td>
+                                    @if ($bankDeposit->currency->currency == 'USD')
+                                        <td class="text-right">{{ app_format_number($bankDeposit->amount) }}</td>
+                                    @else
+                                        <td class="text-right">-</td>
+                                    @endif
+                                    @if ($bankDeposit->currency->currency == 'CDF')
+                                        <td class="text-right">{{ app_format_number($bankDeposit->amount) }}</td>
+                                    @else
+                                        <td class="text-right">-</td>
+                                    @endif
                                     <td class="text-right">{{ $bankDeposit->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
-                                        <x-form.button wire:click='edit({{ $bankDeposit }})'
-                                            class="btn-sm text-primary" type="button">
+                                        <x-form.button wire:click='newBankDeposiMissing({{ $bankDeposit }})'
+                                            class="btn-sm btn-primary" type="button" data-toggle="modal"
+                                            data-target="#new-deposit-bank-missing">
+                                            <i class="fa fa-user-plus" aria-hidden="true"></i>
+                                        </x-form.button>
+                                        <x-form.button wire:click='edit({{ $bankDeposit }})' class="btn-sm btn-info"
+                                            type="button">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </x-form.button>
-                                        <x-form.button
-                                            wire:click='delete({{ $bankDeposit }})' class="btn-sm text-danger"
-                                            wire:confirm="Are you sure you want to delete this post?"
+                                        <x-form.button wire:click='delete({{ $bankDeposit }})'
+                                            class="btn-sm btn-danger" wire:confirm="Etes-vous sûre de supprimer?"
                                             type="button">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </x-form.button>
@@ -51,7 +66,8 @@
                     </table>
                 </div>
                 <div class="card-footer text-right">
-                    <h3>Total: {{ app_format_number($total) }} USD</h3>
+                    <h3>Total CDF: {{ app_format_number($total_cdf) }}</h3>
+                    <h3>Total USD: {{ app_format_number($total_usd) }}</h3>
                 </div>
             </div>
         </div>
@@ -89,7 +105,15 @@
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        @if ($isEditing)
+                            <div class="form-group">
+                                <x-form.label value="{{ __('Date création') }}" />
+                                <x-form.input class="" type='date' wire:model='created_at' />
+                                @error('created_at')
+                                    <span class="error text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @endif
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <x-form.button type="submit" class="btn btn-primary">

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class CategoryDepense extends Model
 {
     use HasFactory;
-    protected $fillable=['name'];
+    protected $fillable = ['name', 'scolary_year_id', 'school_id'];
 
     /**
      * Get all of the depenses for the CategoryDepense
@@ -20,5 +20,4 @@ class CategoryDepense extends Model
     {
         return $this->hasMany(Depense::class);
     }
-
 }

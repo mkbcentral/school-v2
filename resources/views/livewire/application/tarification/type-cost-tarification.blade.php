@@ -1,9 +1,7 @@
 <div>
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="typeCostTarif" tabindex="-1"
-    data-backdrop="static" data-keyboard="false"
-     role="dialog" aria-labelledby="typeCostTarifLabel"
-        aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="typeCostTarif" tabindex="-1" data-backdrop="static" data-keyboard="false"
+        role="dialog" aria-labelledby="typeCostTarifLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -17,13 +15,10 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="col-md-4">
-                            <form 
-                            @if ($isEditing==true)
-                            wire:submit='update'
+                            <form
+                                @if ($isEditing == true) wire:submit='update'
                             @else
-                            wire:submit='store'
-                            @endif
-                            >
+                            wire:submit='store' @endif>
                                 <div class="form-group">
                                     <x-form.label value="{{ __('Nom type frais') }}" />
                                     <x-form.input class="" type='text' placeholder="Nom frais"
@@ -45,13 +40,14 @@
                                         <span class="error text-danger">{{ $message }}</span>
                                     @enderror
                                 </div>
-                                <x-form.button type="submit" class="btn btn-primary">{{$isEditing==true?'Modifier':'Sauvegarder'}}</x-form.button>
+                                <x-form.button type="submit"
+                                    class="btn btn-primary">{{ $isEditing == true ? 'Modifier' : 'Sauvegarder' }}</x-form.button>
                             </form>
                         </div>
                         <div class="col-md-8">
                             <div class="card">
                                 <div class="card-body">
-                                    <table class="table table-striped">
+                                    <table class="table table-bordered">
                                         <thead class="thead-inverse">
                                             <tr>
                                                 <th>#</th>
@@ -59,28 +55,27 @@
                                                 <th>Devise</th>
                                                 <th></th>
                                             </tr>
-                                            </thead>
-                                            <tbody>
-                                                @foreach ($listTypeCost as $index => $type)
-                                                    <tr>
-                                                        <td scope="row">{{$index+1}}</td>
-                                                        <td>{{$type->name}}</td>
-                                                        <td>{{$type?->currency?->currency}}</td>
-                                                        <td>
-                                                            <x-form.button
-                                                            wire:click='edit({{ $type->id }})'
+                                        </thead>
+                                        <tbody>
+                                            @foreach ($listTypeCost as $index => $type)
+                                                <tr>
+                                                    <td scope="row">{{ $index + 1 }}</td>
+                                                    <td>{{ $type->name }}</td>
+                                                    <td>{{ $type?->currency?->currency }}</td>
+                                                    <td>
+                                                        <x-form.button wire:click='edit({{ $type->id }})'
                                                             class="btn-sm text-primary" type="button">
-                                                            <span wire:loading
-                                                                wire:target="edit({{ $type->id }})"
-                                                                class="spinner-border spinner-border-sm"
-                                                                role="status" aria-hidden="true"></span>
+                                                            <span wire:loading wire:target="edit({{ $type->id }})"
+                                                                class="spinner-border spinner-border-sm" role="status"
+                                                                aria-hidden="true"></span>
                                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                                         </x-form.button>
-                                                        </td>
-                                                    </tr>
-                                                @endforeach 
-                                            </tbody>
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
                                     </table>
+                                    {{ $listTypeCost->links('vendor.livewire.bootstrap') }}
                                 </div>
                             </div>
                         </div>

@@ -18,7 +18,6 @@ class ListInscriptionByClasse extends Component
         'selectedClasseOption' => 'getOptionSelected',
         'deleteInscriptionListner' => 'delete'
     ];
-
     public $keyToSearch = '';
     public $classeId;
     public $inscriptions;
@@ -57,6 +56,11 @@ class ListInscriptionByClasse extends Component
             $inscription,
             $inscription->classe->classeOption->id
         );
+    }
+
+    public function showChangeClasseModal(Inscription $inscription)
+    {
+        $this->dispatch('inscriptionTochange', $inscription);
     }
 
     public function shwoDeleteDialog(int $id)

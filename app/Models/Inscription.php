@@ -119,33 +119,38 @@ class Inscription extends Model
     }
     public function getStudentClasseNameForCurrentYear(string $idStudent): string
     {
-        $scoalyYear=(new SchoolHelper())->getCurrentScolaryYear();
-        $inscription=Inscription::where('student_id', $idStudent)
+        $scoalyYear = (new SchoolHelper())->getCurrentScolaryYear();
+        $inscription = Inscription::where('student_id', $idStudent)
             ->where('scolary_year_id', $scoalyYear->id)
             ->first();
         return ' ' . $inscription?->classe->name . '/' . $inscription?->classe?->classeOption->name;
     }
 
-   //Get status with control payment (OK or -)
-   public  function getByCurrentYearPaymentCheckerStatus($idType, $studentId, $month,$scolaryId): string
-   {
-       $payment = GetPaymentByTypeCostToCheck::getCurrentYearPaymentChecker($idType, $studentId, $month,$scolaryId);
-       $status = '';
-       if ($payment) {
-           return   $status = 'OK';
-       } else {
-           return  $status = '-';
-       }
-   }
-   //Get status with control payment (OK or -) with type cost
-   public  function getByCurrentYearBycostPaymentCheckerStatus($idType, $studentId, $month, $costId,$scolaryId): string
-   {
-       $payment = GetPaymentByTypeCostToCheck::getCurrentYearCostPaymentChecker($idType, $studentId, $month, $costId,$scolaryId);
-       $status = '';
-       if ($payment) {
-           return   $status = 'OK';
-       } else {
-           return  $status = '-';
-       }
-   }
+    //Get status with control payment (OK or -)
+    public  function getByCurrentYearPaymentCheckerStatus($idType, $studentId, $month, $scolaryId): string
+    {
+        $payment = GetPaymentByTypeCostToCheck::getCurrentYearPaymentChecker(
+            $idType,
+            $studentId,
+            $month,
+            $scolaryId
+        );
+        $status = '';
+        if ($payment) {
+            return   $status = 'OK';
+        } else {
+            return  $status = '-';
+        }
+    }
+    //Get status with control payment (OK or -) with type cost
+    public  function getByCurrentYearBycostPaymentCheckerStatus($idType, $studentId, $month, $costId, $scolaryId): string
+    {
+        $payment = GetPaymentByTypeCostToCheck::getCurrentYearCostPaymentChecker($idType, $studentId, $month, $costId, $scolaryId);
+        $status = '';
+        if ($payment) {
+            return   $status = 'OK';
+        } else {
+            return  $status = '-';
+        }
+    }
 }

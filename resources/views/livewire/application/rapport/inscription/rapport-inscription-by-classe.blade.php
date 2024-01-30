@@ -6,7 +6,7 @@
     </x-navigation.bread-crumb>
     <x-content.main-content-page>
         <div class="row mt-2">
-            <div class="card col-md-3">
+            <div class="card col-md-2">
                 <div class="card-header">
                     <h4 class="text-uppercase"><i class="fas fa-list-ul"></i> Filières</h4>
                 </div>
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="card col-md-6">
+            <div class="card col-md-8">
                 @php $total=0 @endphp
                 <div class="card-header text-uppercase bg-primary">
                     <h4><i class="fas fa-chart-line    "></i> Tableau de visualisation</h4>
@@ -50,11 +50,12 @@
                                 <tr>
                                     <th scope="col" class="text-center">#</th>
                                     <th scope="col">CLASSE</th>
-                                    <th class="text-center" scope="col">NRE </th>
-                                    <th class="text-center" scope="col">PRIX </th>
-                                    <th class="text-right" scope="col">R.A </th>
-                                    <th class="text-right" scope="col">R.R</th>
-                                    <th class="text-right" scope="col"> M.G</th>
+                                    <th class="text-center" scope="col">EFFECTIF </th>
+                                    <th class="text-center" scope="col">NRE PAYE</th>
+                                    <th class="text-center" scope="col">MONTANT </th>
+                                    <th class="text-right" scope="col">RCTT. ATTENDUE </th>
+                                    <th class="text-right" scope="col">RCCT. REALISEE</th>
+                                    <th class="text-right" scope="col"> MANQ. A GANGNER</th>
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider">
@@ -64,6 +65,7 @@
                                         $amount = $classe->getPaymentByClasseForCurrentYear($classe->id, $selectedOtherCostIndex, $defaultScolaryYerId);
                                         $currency = $classe->getPaymentCurrencyByClasseForCurrentYear($classe->id, $selectedOtherCostIndex, $defaultScolaryYerId);
                                         $amoutMonth = $classe->getAmountPaymentByClasseForCurrentYearByMonth($classe->id, $selectedOtherCostIndex, $month);
+                                        $number_payment = $classe->getCountPaymentByClasseForCurrentYearByMonth($classe->id, $selectedOtherCostIndex, $month);
                                     @endphp
                                     <tr>
                                         <th scope="row" class="text-center">{{ $index + 1 }}</th>
@@ -72,13 +74,16 @@
                                             {{ $number }}
                                         </td>
                                         <td class="text-center">
+                                            {{ $number_payment }}
+                                        </td>
+                                        <td class="text-center">
                                             {{ $amount }}{{ $currency }}
                                         </td>
                                         <td class="text-right">
                                             {{ app_format_number($amount * $number) }}{{ $currency }}
                                         </td>
                                         <td class="text-right">
-                                            {{ app_format_number($amoutMonth) }} {{ $currency }}
+                                            {{ app_format_number($amount * $number_payment) }} {{ $currency }}
                                         </td>
                                         <td class="text-right">
                                             {{ app_format_number($amount * $number - $amoutMonth) }}{{ $currency }}
@@ -91,7 +96,7 @@
 
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-2">
                 <div class="card">
                     <div class="card-header">
                         <h4><i class="fas fa-list-ul"></i>Frais</h4>

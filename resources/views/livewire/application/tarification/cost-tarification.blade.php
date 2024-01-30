@@ -23,17 +23,17 @@
                                     data-target="#typeCostTarif">
                                     <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau type frais
                                 </x-form.button>
-                            </div> 
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="d-flex justify-content-between">
                                 <x-form.button type="button" wire:click='new' class="btn-primary" data-toggle="modal"
-                                data-target="#formTarifModal">
-                                <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau tarif
-                            </x-form.button>
-                            <x-form.search-input/>
+                                    data-target="#formTarifModal">
+                                    <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouveau tarif
+                                </x-form.button>
+                                <x-form.search-input />
                             </div>
-                            <table class="table table-striped">
+                            <table class="table table-bordered">
                                 <thead class="thead-inverse">
                                     <tr>
                                         <th>#</th>
@@ -79,6 +79,7 @@
                                     @endif
                                 </tbody>
                             </table>
+                            {{ $lisCostGeneral->links('vendor.livewire.bootstrap') }}
                         </div>
                     </div>
                 </div>

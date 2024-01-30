@@ -14,10 +14,10 @@
                     </div>
                     <table class="table table-bordered mt-1">
                         <thead class="">
-                            <tr>
+                            <tr class="text-uppercase">
                                 <th>#</th>
                                 <th>Numero</th>
-                                <th class="text-right">Montant</th>
+                                <th class="text-right">Montant USD</th>
                                 <th class="text-right">Date mouvement</th>
                                 <th>Actions</th>
                             </tr>
@@ -31,13 +31,12 @@
                                     <td class="text-right">{{ $moneySaving->amount }}</td>
                                     <td class="text-right">{{ $moneySaving->created_at->format('d/m/Y') }}</td>
                                     <td class="text-center">
-                                        <x-form.button wire:click='edit({{ $moneySaving }})'
-                                            class="btn-sm text-primary" type="button">
+                                        <x-form.button wire:click='edit({{ $moneySaving }})' class="btn-sm btn-primary"
+                                            type="button">
                                             <i class="fa fa-edit" aria-hidden="true"></i>
                                         </x-form.button>
-                                        <x-form.button
-                                            wire:click='delete({{ $moneySaving }})' class="btn-sm text-danger"
-                                            wire:confirm="Are you sure you want to delete this post?"
+                                        <x-form.button wire:click='delete({{ $moneySaving }})'
+                                            class="btn-sm btn-danger" wire:confirm="Etes-vous sûre de supprimer?t?"
                                             type="button">
                                             <i class="fa fa-trash" aria-hidden="true"></i>
                                         </x-form.button>
@@ -89,7 +88,15 @@
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-
+                        @if ($isEditing)
+                            <div class="form-group">
+                                <x-form.label value="{{ __('Date création') }}" />
+                                <x-form.input class="" type='date' wire:model='created_at' />
+                                @error('created_at')
+                                    <span class="error text-danger">{{ $message }}</span>
+                                @enderror
+                            </div>
+                        @endif
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <x-form.button type="submit" class="btn btn-primary">

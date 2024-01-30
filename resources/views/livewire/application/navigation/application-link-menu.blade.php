@@ -1,16 +1,18 @@
 <div class="container pt-4 ">
-    <div  class="d-flex justify-content-center">
-        <h1 wire:loading wire:target='makeLoadingState' >Chargement...</h1>
+    <div class="d-flex justify-content-center">
+        <div wire:loading wire:target='makeLoadingState' class="spinner-border text-white" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
     </div>
     <div>
-        <img class="" src="{{asset('logo-white.png')}}" alt="Logo">
+        <img class="" src="{{ asset('logo-white.png') }}" alt="Logo">
     </div>
     <div class="row mt-4">
         @foreach (Auth::user()?->appLinks as $appLink)
             <div class="col-12 col-sm-6 col-md-3">
                 <a wire:click='makeLoadingState' href="{{ route($appLink?->link, $appLink) }}" wire:navigate>
                     <div class="info-box">
-                        <span class="info-box-icon {{$appLink?->color}} elevation-1">
+                        <span class="info-box-icon {{ $appLink?->color }} elevation-1">
                             <i class="fas {{ $appLink->icon }}"></i>
                         </span>
                         <div class="info-box-content">
@@ -25,56 +27,56 @@
             </div>
         @endforeach
         @can('view-administration-panel')
-                <div class="col-12 col-sm-6 col-md-3">
-                    <a href="/app-configration" target="_blank" wire:navigate>
-                        <div class="info-box">
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="/app-configration" target="_blank" wire:navigate>
+                    <div class="info-box">
                         <span class="info-box-icon bg-dark elevation-1">
                             <i class="fas fas fa-user-cog"></i>
                         </span>
-                            <div class="info-box-content">
+                        <div class="info-box-content">
                             <span class="info-box-number">
-                               Adminstration
+                                Adminstration
                             </span>
-                            </div>
-                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box -->
-                    </a>
-                </div>
-                <div class="col-12 col-sm-6 col-md-3">
-                    <a href="{{route('settings.app.links')}}" wire:navigate>
-                        <div class="info-box">
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="{{ route('settings.app.links') }}" wire:navigate>
+                    <div class="info-box">
                         <span class="info-box-icon bg-danger elevation-1">
                             <i class="fas fas fa-paperclip"></i>
                         </span>
-                            <div class="info-box-content">
+                        <div class="info-box-content">
                             <span class="info-box-number">
-                               Accès au menu
+                                Accès au menu
                             </span>
-                            </div>
-                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box -->
-                    </a>
-                </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div>
         @endcan
         @can('view-links-settings')
-                <div class="col-12 col-sm-6 col-md-3">
-                    <a href="/app-configration" target="_blank" wire:navigate>
-                        <div class="info-box">
+            <div class="col-12 col-sm-6 col-md-3">
+                <a href="/app-configration" target="_blank" wire:navigate>
+                    <div class="info-box">
                         <span class="info-box-icon bg-dark elevation-1">
                             <i class="fas fas fa-user-cog"></i>
                         </span>
-                            <div class="info-box-content">
+                        <div class="info-box-content">
                             <span class="info-box-number">
-                               Adminstration
+                                Adminstration
                             </span>
-                            </div>
-                            <!-- /.info-box-content -->
                         </div>
-                        <!-- /.info-box -->
-                    </a>
-                </div>
+                        <!-- /.info-box-content -->
+                    </div>
+                    <!-- /.info-box -->
+                </a>
+            </div>
         @endcan
     </div>
 </div>

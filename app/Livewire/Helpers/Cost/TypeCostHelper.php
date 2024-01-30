@@ -6,6 +6,7 @@ use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Payment\GetPaymentByTypeCostToCheck;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\TypeOtherCost;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class TypeCostHelper
@@ -15,11 +16,16 @@ class TypeCostHelper
      * @param $defaultScolaryYerId
      * @return Collection
      */
-    public function getListTypeCost($defaultScolaryYerId):Collection{
-        return TypeOtherCost::where('school_id',auth()->user()->school->id)
-            ->where('scolary_year_id',$defaultScolaryYerId)
+    public function getListTypeCost($defaultScolaryYerId, $is_paginate = false): Collection|LengthAwarePaginator
+    {
+        return $is_paginate == false ? TypeOtherCost::where('school_id', auth()->user()->school->id)
+            ->where('scolary_year_id', $defaultScolaryYerId)
             ->with('school')
-            ->get();
+            ->get() :
+            TypeOtherCost::where('school_id', auth()->user()->school->id)
+            ->where('scolary_year_id', $defaultScolaryYerId)
+            ->with('school')
+            ->paginate(5);
     }
 
     /**
@@ -27,10 +33,11 @@ class TypeCostHelper
      * @param $defaultScolaryYerId
      * @return Collection
      */
-    public function getListDisableOldTypeCost():Collection{
-        $scolaryYear=(new SchoolHelper())->getOldScolaryYear();
-        return TypeOtherCost::where('school_id',auth()->user()->school->id)
-            ->where('scolary_year_id',$scolaryYear->id)
+    public function getListDisableOldTypeCost(): Collection
+    {
+        $scolaryYear = (new SchoolHelper())->getOldScolaryYear();
+        return TypeOtherCost::where('school_id', auth()->user()->school->id)
+            ->where('scolary_year_id', $scolaryYear->id)
             ->whereActive(false)
             ->with('school')
             ->get();
@@ -42,11 +49,12 @@ class TypeCostHelper
      * @param array $ids
      * @return Collection
      */
-    public function getListDisableTypeCostWithArrayId(array $ids):Collection{
-        $scolaryYear=(new SchoolHelper())->getOldScolaryYear();
-        return TypeOtherCost::where('school_id',auth()->user()->school->id)
-            ->where('scolary_year_id',$scolaryYear->id)
-            ->whereIn('id',$ids)
+    public function getListDisableTypeCostWithArrayId(array $ids): Collection
+    {
+        $scolaryYear = (new SchoolHelper())->getOldScolaryYear();
+        return TypeOtherCost::where('school_id', auth()->user()->school->id)
+            ->where('scolary_year_id', $scolaryYear->id)
+            ->whereIn('id', $ids)
             ->whereActive(false)
             ->with('school')
             ->get();
@@ -57,10 +65,11 @@ class TypeCostHelper
      * @param $scolaryYearid
      * @return TypeOtherCost
      */
-    public function getFirstTypeCostActive($scolaryYearid):TypeOtherCost{
-       return TypeOtherCost::where('scolary_year_id',$scolaryYearid)
+    public function getFirstTypeCostActive($scolaryYearid): TypeOtherCost
+    {
+        return TypeOtherCost::where('scolary_year_id', $scolaryYearid)
             ->whereActive(true)
-            ->where('school_id',auth()->user()->school->id)->first();
+            ->where('school_id', auth()->user()->school->id)->first();
     }
 
     /**
@@ -69,37 +78,37 @@ class TypeCostHelper
      * @param array $costs
      * @return array
      */
-    public function getListOfCostNotPaymentRapport($studentId,array $costs):array{
+    public function getListOfCostNotPaymentRapport($studentId, array $costs): array
+    {
         //Recuperer le tableau de mois d'un année
-        $months=(new DateFormatHelper())->getMonthsForYear();
-        $data=array();//Stock les mois utilisés pour le paiement et ignore les qu'on pay pas
-        $dataType=array();//Stock le resultat de dettes
-        foreach ($costs as $cost){
+        $months = (new DateFormatHelper())->getMonthsForYear();
+        $data = array(); //Stock les mois utilisés pour le paiement et ignore les qu'on pay pas
+        $dataType = array(); //Stock le resultat de dettes
+        foreach ($costs as $cost) {
             //Recupuer le type de fais
-            $type=TypeOtherCost::find($cost);
-            foreach ($months as $month ){
+            $type = TypeOtherCost::find($cost);
+            foreach ($months as $month) {
                 //Recuperer le paiement par (eleve,typeFrais,mois)
-                $payment=GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($cost,$studentId,$month);
+                $payment = GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($cost, $studentId, $month);
                 //Vérifier s'il y n a pas de paiemnt pour chaque et retourner les mois non payé
-                if(!$payment){
-                    if($month=='06' || $month=='07' || $month=='08'){
-                    }else{
-                        if ($cost==$type->id){
-                            $data[]=$month;
+                if (!$payment) {
+                    if ($month == '06' || $month == '07' || $month == '08') {
+                    } else {
+                        if ($cost == $type->id) {
+                            $data[] = $month;
                         }
                     }
                 }
             }
             //Definir la structure tu tableau des dettes
-            $dataType[]=[
-                'name'=>$type->name,
-                'label'=>(new CostGeneralHelper())->getCostByTypeId($cost)->name,
-                'price'=>(new CostGeneralHelper())->getCostByTypeId($cost)->amount,
-                'months'=>$data,
-                'total'=>(new CostGeneralHelper())->getCostByTypeId($cost)->amount*count($data),
+            $dataType[] = [
+                'name' => $type->name,
+                'label' => (new CostGeneralHelper())->getCostByTypeId($cost)->name,
+                'price' => (new CostGeneralHelper())->getCostByTypeId($cost)->amount,
+                'months' => $data,
+                'total' => (new CostGeneralHelper())->getCostByTypeId($cost)->amount * count($data),
             ];
         }
         return $dataType;
     }
-
 }
