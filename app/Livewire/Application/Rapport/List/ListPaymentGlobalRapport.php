@@ -107,7 +107,7 @@ class ListPaymentGlobalRapport extends Component
         if ($payment->student->studentResponsable) {
             SmsNotificationHelper::sendSMS(
                 '+243898337969',
-                '+243' . $payment->student->studentResponsable->phone,
+                '+243971330007',
                 "C.S." . auth()->user()->school->name . "\nBonjour Mr/Mm Votre enfant "
                     . $payment->student->name
                     . " est en ordre avec le frais "
@@ -117,9 +117,9 @@ class ListPaymentGlobalRapport extends Component
             );
             $payment->has_sms = true;
             $payment->update();
-            $this->dispatchBrowserEvent('added', ['message' => 'Message bien envoyé']);
+            $this->dispatch('added', ['message' => 'Message bien envoyé']);
         } else {
-            $this->dispatchBrowserEvent('error', ["message'=>'Echec d'envoi"]);
+            $this->dispatch('error', ["message'=>'Echec d'envoi"]);
         }
     }
     /**
