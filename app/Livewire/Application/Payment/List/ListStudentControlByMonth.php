@@ -2,7 +2,6 @@
 
 namespace App\Livewire\Application\Payment\List;
 
-use App\Livewire\Application\Payment\OtherCostPayment;
 use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Inscription\GetListInscriptionByClasseHelper;
 use App\Livewire\Helpers\SchoolHelper;
@@ -13,21 +12,21 @@ class ListStudentControlByMonth extends Component
 {
     protected $listeners = [
         'scolaryYearFresh' => 'getScolaryYear',
-        'typeCostSelected'=>'getTypeCost'
+        'typeCostSelected' => 'getTypeCost'
     ];
     public $defaultScolaryYerId;
-    public $selectedIndex=0,$classe_id=0,$classe_option_id=0;
-    public $months=[];
+    public $selectedIndex = 0, $classe_id = 0, $classe_option_id = 0;
+    public $months = [];
     public $typeCost;
 
     public function updatedClasseId($val): void
     {
-        $this->classe_id=$val;
+        $this->classe_id = $val;
     }
 
     public function updatedClasseOptionId($val): void
     {
-        $this->classe_option_id=$val;
+        $this->classe_option_id = $val;
     }
     /**
      * Get selected scolaryYear id with emit ScolaryYearWidget listener
@@ -45,8 +44,8 @@ class ListStudentControlByMonth extends Component
      */
     public function getTypeCost($id): void
     {
-        $this->selectedIndex=$id;
-        $this->typeCost=TypeOtherCost::find($id);
+        $this->selectedIndex = $id;
+        $this->typeCost = TypeOtherCost::find($id);
     }
 
     /**
@@ -56,16 +55,16 @@ class ListStudentControlByMonth extends Component
      */
     public function mount($selectedIndex): void
     {
-        $this->selectedIndex=$selectedIndex;
-        $this->defaultScolaryYerId=(new SchoolHelper())->getCurrentScolaryYear()->id;
-        $this->months=(new DateFormatHelper())->getMonthsForScolaryYear();
-        $this->typeCost=TypeOtherCost::find($this->selectedIndex);
+        $this->selectedIndex = $selectedIndex;
+        $this->defaultScolaryYerId = (new SchoolHelper())->getCurrentScolaryYear()->id;
+        $this->months = (new DateFormatHelper())->getMonthsForScolaryYear();
+        $this->typeCost = TypeOtherCost::find($this->selectedIndex);
     }
 
     public function render()
     {
-        return view('livewire.application.payment.list.list-student-control-by-month',[
-            'listStudent'=>GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id,$this->defaultScolaryYerId),
+        return view('livewire.application.payment.list.list-student-control-by-month', [
+            'listStudent' => GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id, $this->defaultScolaryYerId),
         ]);
     }
 }

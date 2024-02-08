@@ -153,4 +153,16 @@ class Inscription extends Model
             return  $status = '-';
         }
     }
+
+    //Get status with control payment (OK or -) with type cost
+    public  function getByCurrentYearBycostPaymentCheckerStattusByTranch($idType, $studentId, $costId, $scolaryId): string
+    {
+        $payment = GetPaymentByTypeCostToCheck::getCurrentYearCostPaymentCheckerByTranch($idType, $studentId, $costId, $scolaryId);
+        $status = '';
+        if ($payment) {
+            return   $status = 'OK';
+        } else {
+            return  $status = '-';
+        }
+    }
 }

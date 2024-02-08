@@ -65,7 +65,8 @@
                 </tbody>
             </table>
             <div class="d-flex justify-content-end bg-navy p-1 rounded-lg pr-2">
-                <h3 wire:loading.class="d-none"><span>Total</span>
+                <h3 wire:loading.class="d-none">
+                    <span>Total</span>
                     <span class="money_format">CDF: {{ app_format_number($total, 1) }}</span> |
                 </h3>
             </div>
