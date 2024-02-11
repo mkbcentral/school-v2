@@ -5,9 +5,7 @@ namespace App\Livewire\Application\Payment\List;
 use App\Livewire\Helpers\Payment\GetPaymentByDateHelper;
 use App\Livewire\Helpers\Printing\PosPrintingHelper;
 use App\Livewire\Helpers\SchoolHelper;
-use App\Models\Currency;
 use App\Models\Payment;
-use JetBrains\PhpStorm\NoReturn;
 use Livewire\Component;
 
 class ListPaymentByDay extends Component
