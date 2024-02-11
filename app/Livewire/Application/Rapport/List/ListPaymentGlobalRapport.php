@@ -107,7 +107,7 @@ class ListPaymentGlobalRapport extends Component
         if ($payment->student->studentResponsable) {
             SmsNotificationHelper::sendSMS(
                 '+243898337969',
-                '+243971330007',
+                '+243' . $payment->student->studentResponsable->phone,
                 "C.S." . auth()->user()->school->name . "\nBonjour Mr/Mm Votre enfant "
                     . $payment->student->name
                     . " est en ordre avec le frais "
