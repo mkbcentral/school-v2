@@ -28,7 +28,8 @@
                             @foreach ($listBankDeposit as $index => $bankDeposit)
                                 <tr class="{{ $bankDeposit->bankDepositMissing != null ? 'bg-danger' : '' }}">
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $bankDeposit->number . '-' . app_get_month_name($bankDeposit->month_name) }}
+                                    <td class="text-bold">
+                                        {{ $bankDeposit->number . '-' . app_get_month_name($bankDeposit->month_name) }}
                                     </td>
                                     @if ($bankDeposit->currency->currency == 'USD')
                                         <td class="text-right">{{ app_format_number($bankDeposit->amount) }}</td>
@@ -105,15 +106,13 @@
                                 <span class="error text-danger">{{ $message }}</span>
                             @enderror
                         </div>
-                        @if ($isEditing)
-                            <div class="form-group">
-                                <x-form.label value="{{ __('Date création') }}" />
-                                <x-form.input class="" type='date' wire:model='created_at' />
-                                @error('created_at')
-                                    <span class="error text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-                        @endif
+                        <div class="form-group">
+                            <x-form.label value="{{ __('Date création') }}" />
+                            <x-form.input class="" type='date' wire:model='created_at' />
+                            @error('created_at')
+                                <span class="error text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                     <div class="card-footer d-flex justify-content-end">
                         <x-form.button type="submit" class="btn btn-primary">

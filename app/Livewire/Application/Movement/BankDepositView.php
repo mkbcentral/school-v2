@@ -33,7 +33,6 @@ class BankDepositView extends Component
     public function store()
     {
         $fields = $this->validate();
-
         try {
             $fields['number'] = rand(10000, 100000);
             $fields['scolary_year_id'] = (new SchoolHelper())->getCurrectScolaryYear()->id;
@@ -96,11 +95,17 @@ class BankDepositView extends Component
             $this->update();
         }
     }
-
+    public function mount()
+    {
+        $this->created_at = date('Y-m-d');
+        $this->month_name = date('m');
+        $this->currency_id = 1;
+    }
     public function render()
     {
         return view('livewire.application.movement.bank-deposit-view', [
-            'listBankDeposit' => BankDeposit::where('scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)->get(),
+            'listBankDeposit' => BankDeposit::where('scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)
+                ->orderBy('created_at')->get(),
             'listCurrency' => Currency::all(),
             'total_usd' => DepositBankHelper::getAmountDepositBank('USD'),
             'total_cdf' => DepositBankHelper::getAmountDepositBank('CDF'),

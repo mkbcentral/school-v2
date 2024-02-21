@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class BankDeposit extends Model
 {
     use HasFactory;
-    protected $fillable = ['amount', 'number', 'month_name', 'school_id', 'currency_id', 'scolary_year_id'];
+    protected $fillable = ['amount', 'number', 'month_name', 'school_id', 'currency_id', 'scolary_year_id', 'created_at'];
     /**
      * Get the currency that owns the BankDeposit
      *
