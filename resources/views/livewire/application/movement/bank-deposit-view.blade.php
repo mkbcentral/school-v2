@@ -65,6 +65,7 @@
                             @endforeach
                         </tbody>
                     </table>
+                    {{ $listBankDeposit->links('vendor.livewire.bootstrap') }}
                 </div>
                 <div class="card-footer text-right">
                     <h3>Total CDF: {{ app_format_number($total_cdf) }}</h3>

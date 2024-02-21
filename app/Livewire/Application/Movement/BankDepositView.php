@@ -10,9 +10,11 @@ use Exception;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Rule;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class BankDepositView extends Component
 {
+    use WithPagination;
 
     #[Rule('required', message: 'Montant obligation', onUpdate: false)]
     #[Rule('numeric', message: 'Le montant doit être numerique', onUpdate: false)]
@@ -105,7 +107,7 @@ class BankDepositView extends Component
     {
         return view('livewire.application.movement.bank-deposit-view', [
             'listBankDeposit' => BankDeposit::where('scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)
-                ->orderBy('created_at')->get(),
+                ->orderBy('created_at')->paginate(20),
             'listCurrency' => Currency::all(),
             'total_usd' => DepositBankHelper::getAmountDepositBank('USD'),
             'total_cdf' => DepositBankHelper::getAmountDepositBank('CDF'),
