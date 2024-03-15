@@ -7,14 +7,15 @@
         $total_depense = 0;
     @endphp
     <div class="container">
-        <h2 class="text-uppercase text-center text-primary"><i class="fas fa-chart-line    "></i> Rapport fincier années
+        <h2 class="text-uppercase text-center text-primary"><i class="fas fa-chart-line"></i>
+            Rapport fincier année
             scolare
             2023-2024</h2>
         <table class="table table-bordered text-bold table-sm active">
             <thead class="table-primary">
                 <tr>
                     <td>MOIS</td>
-                    <td class="text-right">MONTANT</td>
+                    <td class="text-right">RECETTES</td>
                     <td class="text-right">DEPENSES</td>
                     <td class="text-right">SOLDE</td>
                 </tr>
@@ -65,7 +66,5 @@
                     </tr>
                 @endforeach
         </table>
-
     </div>
-
 </div>

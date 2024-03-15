@@ -24,7 +24,6 @@ use App\Livewire\Application\Inscription\List\ListAllInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
 use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
-use App\Livewire\Application\Payement\FinanceRepportView;
 use App\Livewire\Application\Payment\FinanceRepportView as PaymentFinanceRepportView;
 use App\Livewire\Application\Payment\MainLatePaymeent;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;

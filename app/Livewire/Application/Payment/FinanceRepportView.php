@@ -11,6 +11,8 @@ class FinanceRepportView extends Component
     public function mount()
     {
         $this->months = [
+            ['name' => 'Juillet', 'value' => '07'],
+            ['name' => 'Aout', 'value' => '08'],
             ['name' => 'Septembre', 'value' => '09'],
             ['name' => 'Octobre', 'value' => '10'],
             ['name' => 'Novembre', 'value' => '11'],
