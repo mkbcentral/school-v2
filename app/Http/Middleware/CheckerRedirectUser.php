@@ -16,8 +16,8 @@ class CheckerRedirectUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-        $cucrrentRouteName=Route::currentRouteName();
-        if (in_array($cucrrentRouteName,$this->userAccessRole()[ auth()->user()->getRoleNames()[0]])) {
+        $cucrrentRouteName = Route::currentRouteName();
+        if (in_array($cucrrentRouteName, $this->userAccessRole()[auth()->user()->getRoleNames()[0]])) {
             return $next($request);
         } else {
             abort(403);
@@ -25,13 +25,14 @@ class CheckerRedirectUser
     }
 
 
-    Public function userAccessRole(){
+    public function userAccessRole()
+    {
         return [
-            'App-Admin'=>[
+            'App-Admin' => [
                 'filament.pages.dashboard',
                 'main',
             ],
-            'Super-Admin'=>[
+            'Super-Admin' => [
                 'main',
                 'filament.pages.dashboard',
                 'school.create',
@@ -40,7 +41,7 @@ class CheckerRedirectUser
                 'settings.app',
                 'user.account'
             ],
-            'Coordinator'=>[
+            'Coordinator' => [
                 'main',
                 'dashboard.main',
                 'rapport.payments',
@@ -52,7 +53,7 @@ class CheckerRedirectUser
                 'user.account',
                 'inscription.list.by.classe',
             ],
-            'Finance'=>[
+            'Finance' => [
                 'main',
                 'dashboard.main',
                 'inscription.payment.valide',
@@ -76,9 +77,10 @@ class CheckerRedirectUser
                 'inscription.list.by.classe',
                 'print.list.inscription.by.classe',
                 'depense.emprunt',
-                'movement.other'
+                'movement.other',
+                'payment.finance.repport'
             ],
-            'Secretary'=>[
+            'Secretary' => [
                 'main',
                 'dashboard.main',
                 'inscription.new',

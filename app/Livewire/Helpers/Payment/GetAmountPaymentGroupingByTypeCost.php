@@ -2,8 +2,6 @@
 
 namespace App\Livewire\Helpers\Payment;
 
-use App\Livewire\Helpers\SchoolHelper;
-use App\Models\Paiment;
 use App\Models\Payment;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -25,7 +23,7 @@ class GetAmountPaymentGroupingByTypeCost
             ->where('payments.month_name', $month)
             ->where('payments.school_id', auth()->user()->school->id)
             ->where('payments.is_paid', true)
-            ->with(['cost', 'classe.optionClasse','cost.classeOption.currency'])
+            ->with(['cost', 'classe.optionClasse', 'cost.classeOption.currency'])
             ->select(
                 'type_other_costs.name',
                 DB::raw("SUM(cost_generals.amount) as amount")
@@ -48,7 +46,7 @@ class GetAmountPaymentGroupingByTypeCost
             ->whereDate('payments.created_at', $date)
             ->where('payments.school_id', auth()->user()->school->id)
             ->where('payments.is_paid', true)
-            ->with(['cost', 'classe.optionClasse','cost.classeOption.currency'])
+            ->with(['cost', 'classe.optionClasse', 'cost.classeOption.currency'])
             ->select(
                 'type_other_costs.name',
                 DB::raw("COUNT(payments.id) as number"),

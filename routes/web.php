@@ -24,6 +24,8 @@ use App\Livewire\Application\Inscription\List\ListAllInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
 use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
+use App\Livewire\Application\Payement\FinanceRepportView;
+use App\Livewire\Application\Payment\FinanceRepportView as PaymentFinanceRepportView;
 use App\Livewire\Application\Payment\MainLatePaymeent;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;
 use App\Livewire\Application\Tarification\CostTarification;
@@ -59,6 +61,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('other-cost-payment', OtherCostPayment::class)->name('payment.other.cost');
         Route::get('control-payment', MainControlPayment::class)->name('payment.control');
         Route::get('late', MainLatePaymeent::class)->name('payment.late');
+        Route::get('finance-repport', PaymentFinanceRepportView::class)->name('payment.finance.repport');
     });
     //Settings links route
     Route::prefix('settings')->group(function () {
@@ -84,8 +87,8 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('other', OtherMovement::class)->name('movement.other');
     });
 
-     //Tarifications
-     Route::prefix('tarification')->group(function () {
+    //Tarifications
+    Route::prefix('tarification')->group(function () {
         Route::get('cost', CostTarification::class)->name('tarification.cost.general');
     });
 
