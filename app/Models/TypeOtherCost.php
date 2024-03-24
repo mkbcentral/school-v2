@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Payment\GetPaymentByTypeCostToCheck;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -12,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class TypeOtherCost extends Model
 {
     use HasFactory;
-    protected $fillable=['id','name','school_id','active','scolary_year_id','currency_id'];
+    protected $fillable = ['id', 'name', 'school_id', 'active', 'scolary_year_id', 'currency_id'];
 
     /**
      * Get the currency that owns the TypeOtherCost
@@ -58,13 +57,14 @@ class TypeOtherCost extends Model
      * @param $month
      * @return string
      */
-    public  function getPaymentCheckerStatus($idType,$studentId,$month):string{
-        $payment=GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($idType,$studentId,$month);
-        $status='';
-        if($payment){
-            return   $status='OK';
-        }else{
-            return  $status='-';
+    public  function getPaymentCheckerStatus($idType, $studentId, $month): string
+    {
+        $payment = GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($idType, $studentId, $month);
+        $status = '';
+        if ($payment) {
+            return   $status = 'OK';
+        } else {
+            return  $status = '-';
         }
     }
 
@@ -75,13 +75,14 @@ class TypeOtherCost extends Model
      * @param $month
      * @return string
      */
-    public  function getPaymentCheckerBgtatus($idType,$studentId,$month):string{
-        $payment=GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($idType,$studentId,$month);
-        $status='';
-        if($payment){
+    public  function getPaymentCheckerBgtatus($idType, $studentId, $month): string
+    {
+        $payment = GetPaymentByTypeCostToCheck::getPaymentForLasYearChecker($idType, $studentId, $month);
+        $status = '';
+        if ($payment) {
             return $status;
-        }else{
-            return $status='bg-danger';
+        } else {
+            return $status = 'bg-danger';
         }
     }
 
@@ -90,10 +91,11 @@ class TypeOtherCost extends Model
      * @param $month
      * @return string
      */
-    public function getBgColorWithMonthNotPayment($month):string{
-        $bg='';
-        if ($month=='06' || $month=='07' || $month=='08'){
-            $bg='bg-success';
+    public function getBgColorWithMonthNotPayment($month): string
+    {
+        $bg = '';
+        if ($month == '06' || $month == '07' || $month == '08') {
+            $bg = 'bg-success';
         }
         return $bg;
     }

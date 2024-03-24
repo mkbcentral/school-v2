@@ -78,7 +78,8 @@ class CheckerRedirectUser
                 'print.list.inscription.by.classe',
                 'depense.emprunt',
                 'movement.other',
-                'payment.finance.repport'
+                'payment.finance.repport',
+                'payment.finance.repport.cost'
             ],
             'Secretary' => [
                 'main',

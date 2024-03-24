@@ -66,5 +66,8 @@
                     </tr>
                 @endforeach
         </table>
+        <div class="mt-4">
+            @livewire('application.payment.finance-by-cost-repport-view')
+        </div>
     </div>
 </div>

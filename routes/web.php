@@ -24,6 +24,7 @@ use App\Livewire\Application\Inscription\List\ListAllInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
 use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
+use App\Livewire\Application\Payment\FinanceByCostRepportView;
 use App\Livewire\Application\Payment\FinanceRepportView as PaymentFinanceRepportView;
 use App\Livewire\Application\Payment\MainLatePaymeent;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;
@@ -61,6 +62,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('control-payment', MainControlPayment::class)->name('payment.control');
         Route::get('late', MainLatePaymeent::class)->name('payment.late');
         Route::get('finance-repport', PaymentFinanceRepportView::class)->name('payment.finance.repport');
+        Route::get('finance-repport-cost', FinanceByCostRepportView::class)->name('payment.finance.repport.cost');
     });
     //Settings links route
     Route::prefix('settings')->group(function () {
