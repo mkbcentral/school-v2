@@ -11,7 +11,7 @@
             scolare
             2023-2024 recettes globales</h2>
         <table class="table table-bordered text-bold table-sm active">
-            <thead class="table-primary">
+            <thead class="bg-info">
                 <tr>
                     <td>MOIS</td>
                     @foreach ($type_costs as $type_cost)

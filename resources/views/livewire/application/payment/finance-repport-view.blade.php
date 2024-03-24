@@ -12,7 +12,7 @@
             scolare
             2023-2024</h2>
         <table class="table table-bordered text-bold table-sm active">
-            <thead class="table-primary">
+            <thead class="bg-primary">
                 <tr>
                     <td>MOIS</td>
                     <td class="text-right">RECETTES</td>
