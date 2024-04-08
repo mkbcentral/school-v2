@@ -12,6 +12,15 @@
                 <x-form.label value="{{ __('Filtrer par classe') }}" />
                 <x-widget.list-classe-select-widget option='{{ $classe_option_id }}' wire:model.live='classe_id' />
             </div>
+            <div class="form-group ml-2">
+                <x-form.label value="{{ __('Frais') }}" />
+                <select class="form-control" name="" id="" wire:model.live='cost_general_id'>
+                    <option value="0">Choisir...</option>
+                    @foreach ($listTypeCost as $cost)
+                        <option value="{{ $cost->id }}">{{ $cost->name }}</option>
+                    @endforeach
+                </select>
+            </div>
         </div>
         <div class="d-flex justify-content-center"><x-widget.loading-circular-md /></div>
         @if ($listStudent->isEmpty())
@@ -34,7 +43,12 @@
                             <td>{{ $inscription->student->name }}</td>
                             @foreach ($months as $month)
                                 @php
-                                    $status = $inscription->getByCurrentYearPaymentCheckerStatus($selectedIndex, $inscription->student->id, $month, $defaultScolaryYerId);
+                                    $status = $inscription->getByCurrentYearPaymentCheckerStatus(
+                                        $selectedIndex,
+                                        $inscription->student->id,
+                                        $month,
+                                        $defaultScolaryYerId,
+                                    );
                                 @endphp
                                 <td
                                     class="text-center

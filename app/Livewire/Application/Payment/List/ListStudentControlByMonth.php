@@ -5,6 +5,7 @@ namespace App\Livewire\Application\Payment\List;
 use App\Livewire\Helpers\DateFormatHelper;
 use App\Livewire\Helpers\Inscription\GetListInscriptionByClasseHelper;
 use App\Livewire\Helpers\SchoolHelper;
+use App\Models\CostGeneral;
 use App\Models\TypeOtherCost;
 use Livewire\Component;
 
@@ -15,9 +16,10 @@ class ListStudentControlByMonth extends Component
         'typeCostSelected' => 'getTypeCost'
     ];
     public $defaultScolaryYerId;
-    public $selectedIndex = 0, $classe_id = 0, $classe_option_id = 0;
+    public $selectedIndex = 0, $classe_id = 0, $classe_option_id = 0, $cost_general_id = 0;
     public $months = [];
     public $typeCost;
+
 
     public function updatedClasseId($val): void
     {
@@ -64,7 +66,10 @@ class ListStudentControlByMonth extends Component
     public function render()
     {
         return view('livewire.application.payment.list.list-student-control-by-month', [
-            'listStudent' => GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id, $this->defaultScolaryYerId),
+            'listStudent' => $this->cost_general_id == 0 ? GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id, $this->defaultScolaryYerId)
+                : GetListInscriptionByClasseHelper::getListInscrptinByCostForCurrentYear($this->classe_id, $this->defaultScolaryYerId, $this->cost_general_id),
+            'listTypeCost' => CostGeneral::where('type_other_cost_id', $this->selectedIndex)
+                ->get()
         ]);
     }
 }
