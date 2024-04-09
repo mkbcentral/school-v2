@@ -66,8 +66,7 @@ class ListStudentControlByMonth extends Component
     public function render()
     {
         return view('livewire.application.payment.list.list-student-control-by-month', [
-            'listStudent' => $this->cost_general_id == 0 ? GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id, $this->defaultScolaryYerId)
-                : GetListInscriptionByClasseHelper::getListInscrptinByCostForCurrentYear($this->classe_id, $this->defaultScolaryYerId, $this->cost_general_id),
+            'listStudent' => GetListInscriptionByClasseHelper::getListInscrptinForCurrentYear($this->classe_id, $this->defaultScolaryYerId),
             'listTypeCost' => CostGeneral::where('type_other_cost_id', $this->selectedIndex)
                 ->get()
         ]);
