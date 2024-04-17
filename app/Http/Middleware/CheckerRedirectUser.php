@@ -79,10 +79,7 @@ class CheckerRedirectUser
                 'depense.emprunt',
                 'movement.other',
                 'payment.finance.repport',
-                'payment.finance.repport.cost',
-                'print.deposit.bank.by.month',
-                'print.money.saving',
-                'print.agent.salary',
+                'payment.finance.repport.cost'
             ],
             'Secretary' => [
                 'main',

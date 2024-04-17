@@ -42,7 +42,7 @@ use App\Livewire\Application\User\MyAccount;
 | contains the "web" middleware group. Now create something great!
 */
 
-Route::middleware(['auth', 'route-access-checker',''])->group(function () {
+Route::middleware(['auth', 'route-access-checker'])->group(function () {
     Route::get('/', ApplicationLinkController::class)->name('main');
     Route::get('/app-create-school', CreateSchoolController::class)->name('school.create');
     //DASHBOARD REFACTORING
