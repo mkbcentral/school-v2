@@ -5,10 +5,9 @@
     <div class="card p-2" wire:loading.class='d-none'>
         <div class="card-header">
             SITUATION DE REGULARISATION
-            <h1>{{ $inscription->id . '/' . $inscription->classe->name }}</h1>
         </div>
         <div class="card-body">
-            @if ($payments->isEmpty())
+            @if ($inscription->payments->isEmpty())
                 <x-data-empty />
             @else
                 <table class="table table-striped">
@@ -21,12 +20,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($payments as $index => $payment)
+                        @foreach ($inscription->payments as $index => $payment)
                             <tr>
                                 <td scope="row">{{ $index + 1 }}</td>
                                 <td>{{ $payment->created_at->format('d/m/Y') }}</td>
                                 <td>{{ $payment->cost->name }}</td>
-                                <td>{{ $payment->month_name }}</td>
+                                <td>{{ app_get_month_name($payment->month_name) }}</td>
                             </tr>
                         @endforeach
                     </tbody>
