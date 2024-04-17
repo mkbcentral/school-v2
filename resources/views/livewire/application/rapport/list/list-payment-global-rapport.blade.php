@@ -38,28 +38,30 @@
     </div>
     <div>
         <div class="d-flex justify-content-between align-items-center">
-            <x-form.search-input />
+            <x-form.search-input wire:model.live='keyToSearch' />
             <div class="d-flex justify-content-center align-items-center">
-                <x-widget.loading-circular-md/>
+                <x-widget.loading-circular-md />
             </div>
             <div class="d-flex">
                 <x-form.button type="button" wire:click='loadData' class="btn btn-primary btn-sm mr-2">
                     <i class="fas fa-sync" aria-hidden="true"></i> Actualiser
                 </x-form.button>
-                @if (config('app.env')=='production')}
-                <x-form.button type="button" wire:click='updateSoclyYearInscrption' class="btn btn-danger btn-sm">
-                    <i class="fas fa-toolbox    "></i> Fixing
-                </x-form.button>
+                @if (config('app.env') == 'production')
+                    }
+                    <x-form.button type="button" wire:click='updateSoclyYearInscrption' class="btn btn-danger btn-sm">
+                        <i class="fas fa-toolbox    "></i> Fixing
+                    </x-form.button>
                 @endif
-               
+
                 <div class="bg-warning ml-2 p-2">
-                   @if ($amountPayments==null)
-                   <h6 class="text-bold text-uppercase">Total: {{ app_format_number(0) }}</h6 class="tex-bold">
-                   @else
-                   @foreach ($amountPayments as $payment)
-                   <h6 class="text-bold text-uppercase">Total: {{ app_format_number($payment->amount) }} {{ $payment->currency }}</h6 class="tex-bold">
-               @endforeach
-                   @endif
+                    @if ($amountPayments == null)
+                        <h6 class="text-bold text-uppercase">Total: {{ app_format_number(0) }}</h6 class="tex-bold">
+                    @else
+                        @foreach ($amountPayments as $payment)
+                            <h6 class="text-bold text-uppercase">Total: {{ app_format_number($payment->amount) }}
+                                {{ $payment->currency }}</h6 class="tex-bold">
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
@@ -85,7 +87,7 @@
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $payment->created_at->format('d/m/Y') }}</td>
                             <td>
-                                {{$payment->student->name .'/'.$payment?->getStudentClasseName($payment)}}
+                                {{ $payment->student->name . '/' . $payment?->getStudentClasseName($payment) }}
                             </td>
                             <td class="text-center">
                                 <span class="{{ $payment->has_sms ? 'text-success' : 'text-danger' }}">

@@ -126,7 +126,7 @@ class Inscription extends Model
         return ' ' . $inscription?->classe->name . '/' . $inscription?->classe?->classeOption->name;
     }
 
-    //Get status with control payment (OK or -)
+    //Get status with control payment (OK or -) getByCurrentYearPaymentCheckerStatus
     public  function getByCurrentYearPaymentCheckerStatus($idType, $studentId, $month, $scolaryId): string
     {
         $payment = GetPaymentByTypeCostToCheck::getCurrentYearPaymentChecker(

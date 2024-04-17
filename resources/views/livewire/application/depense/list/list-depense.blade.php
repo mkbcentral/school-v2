@@ -9,8 +9,8 @@
             data-target="#formDepenseModal">
             <i class="fa fa-plus-circle" aria-hidden="true"></i> Nouvelle dépense
         </x-form.button>
-        <a href="{{ route('depense.month', [$month]) }}" target="_blank" class="btn btn-primary"><i class="fa fa-print"
-                aria-hidden="true"></i> Imprimer</a>
+        <a href="{{ route('depense.month', [$month, $currency, $source, $category, $type_depense_id]) }}" target="_blank"
+            class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i> Imprimer</a>
     </div>
     <div class="d-flex justify-content-between mt-4 align-items-center">
         <div class="form-group d-flex align-items-center">

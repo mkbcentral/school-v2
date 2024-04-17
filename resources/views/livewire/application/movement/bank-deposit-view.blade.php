@@ -7,12 +7,24 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    LISTE DEPOT BANK
+                    <div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5> LISTE DEPOT BANK</h5>
+                            <div class="form-group mr-2">
+                                <x-form.label value="{{ __('Choisir un le mois') }}" />
+                                <x-widget.list-month wire:model.live='month_name' />
+                            </div>
+                            <a target="_blank" href="{{ route('print.deposit.bank.by.month', [$month_name]) }}"
+                                class="btn btn-primary"><i class="fa fa-print" aria-hidden="true"></i>
+                                Imprimer</a>
+                        </div>
+                    </div>
                 </div>
                 <div class="card-body">
                     <div class="text-center">
                         <x-widget.loading-circular-md />
                     </div>
+
                     <table class="table table-bordered mt-1">
                         <thead class="">
                             <tr>

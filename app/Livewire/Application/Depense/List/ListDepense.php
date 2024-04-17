@@ -9,8 +9,6 @@ use App\Livewire\Helpers\Depense\DepenseSourceHelper;
 use App\Livewire\Helpers\Depense\TypeDepenseHelper;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\Depense;
-use App\Models\DepenseSource;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class ListDepense extends Component
@@ -20,7 +18,7 @@ class ListDepense extends Component
     public bool $isByDate = true;
     public ?Depense $depense;
     public bool $isEditing = false;
-    public string $source = '', $category = '', $currency = '', $type_depense_id;
+    public string $source = 'Aucune', $category = 'Aucune', $currency = 'Aucune', $type_depense_id;
     public string $depenseId;
     protected $listeners = [
         'refreshListDepense' => '$refresh',
@@ -30,14 +28,23 @@ class ListDepense extends Component
     public function updatedCategory($val)
     {
         $this->category = $val;
+        if ($val == '') {
+            $this->category = 'Aucune';
+        }
     }
     public function updatedCurrency($val)
     {
         $this->currency = $val;
+        if ($val == '') {
+            $this->currency = "Aucune";
+        }
     }
     public function updatedSource($val)
     {
         $this->source = $val;
+        if ($val == '') {
+            $this->source = "Aucune";
+        }
     }
 
     public function updatedDate($val)

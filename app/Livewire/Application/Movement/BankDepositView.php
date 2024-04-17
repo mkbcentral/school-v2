@@ -107,10 +107,11 @@ class BankDepositView extends Component
     {
         return view('livewire.application.movement.bank-deposit-view', [
             'listBankDeposit' => BankDeposit::where('scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)
+                ->whereMonth('created_at', $this->month_name)
                 ->orderBy('created_at')->paginate(20),
             'listCurrency' => Currency::all(),
-            'total_usd' => DepositBankHelper::getAmountDepositBank('USD'),
-            'total_cdf' => DepositBankHelper::getAmountDepositBank('CDF'),
+            'total_usd' => DepositBankHelper::getAmountDepositBankByMonth('USD', $this->month_name),
+            'total_cdf' => DepositBankHelper::getAmountDepositBankByMonth('CDF', $this->month_name),
         ]);
     }
 }

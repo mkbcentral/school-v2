@@ -8,7 +8,19 @@
             <div style="text-align: center;padding: 15px;font-size: 22px">
                 <u>SITUATION DES DEPENSES MENSUELLES</u>
             </div>
-            <span style="margin-top: 8px;margin-bottom: 8px "><b>Mois</b>: {{ app_get_month_name($month) }}</span>
+            <span style="margin-top: 8px;margin-bottom: 8px ">
+                <b>Mois</b>: {{ app_get_month_name($month) }}<br>
+                @if ($currency != '')
+                    <b>Devise</b>: {{ $currency }}<br>
+                @endif
+                @if ($source != '')
+                    <b>Source</b>: {{ $source }}<br>
+                @endif
+                @if ($category != '')
+                    <b>Category</b>: {{ $category }}<br>
+                @endif
+
+            </span>
         </div>
     </div>
     <div>
@@ -17,8 +29,8 @@
             <table>
                 <thead>
                     <tr style="background: rgb(139, 139, 139);text-transform: uppercase">
-                        <th>#</th>
-                        <th>Date</th>
+                        <th style="text-align: center">#</th>
+                        <th text-align: center>Date</th>
                         <th>Description</th>
                         <th>Source</th>
                         <th style="text-align: right">MT USD</th>
@@ -28,8 +40,8 @@
                 <tbody>
                     @foreach ($listDepense as $index => $depense)
                         <tr>
-                            <td scope="row">{{ $index + 1 }}</td>
-                            <td>{{ $depense->created_at->format('d/m/Y') }}</td>
+                            <td scope="row" style="width: 30px;text-align: center">{{ $index + 1 }}</td>
+                            <td style="width: 80px;">{{ $depense->created_at->format('d/m/Y') }}</td>
                             <td>{{ $depense->name }}</td>
                             <td>{{ $depense->source }}</td>
                             <td style="text-align: right">
@@ -53,7 +65,7 @@
                             } else {
                                 $total_cdf += $depense->amount;
                             }
-                            
+
                         @endphp
                     @endforeach
                     <tr style="background: rgb(139, 139, 139);">

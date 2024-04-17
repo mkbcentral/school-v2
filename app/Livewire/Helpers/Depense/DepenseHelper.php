@@ -16,8 +16,11 @@ class DepenseHelper
      * @param string $month
      * @return Collection
      */
-    public static function getByMonth(string $month, $curreny = "", $source = "", $category = "", $type_depense_id): Collection
+    public static function getByMonth(string $month, $currency = "", $source = "", $category = "", $type_depense_id): Collection
     {
+        $currency == "Aucune" ? $currency = '' : $currency;
+        $source == "Aucune" ?  $source = '' : $source;
+        $category == "Aucune" ?  $category = '' : $category;
         return Depense::whereMonth('depenses.created_at', $month)
             ->join('currencies', 'currencies.id', 'depenses.currency_id')
             ->join('depense_sources', 'depense_sources.id', 'depenses.depense_source_id')
@@ -32,7 +35,7 @@ class DepenseHelper
             ->where('depenses.scolary_year_id', (new SchoolHelper())->getCurrectScolaryYear()->id)
             ->where('depenses.school_id', Auth::user()->school->id)
             ->where('depenses.depense_type_id', $type_depense_id)
-            ->where('currencies.currency', 'LIKE', '%' . $curreny . '%')
+            ->where('currencies.currency', 'LIKE', '%' . $currency . '%')
             ->where('depense_sources.name', 'LIKE', '%' . $source . '%')
             ->where('category_depenses.name', 'LIKE', '%' . $category . '%')
             ->get();

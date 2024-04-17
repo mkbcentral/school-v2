@@ -18,6 +18,7 @@ use App\Http\Controllers\Application\Printings\PrintingDepenseAndEmpruntControll
 use App\Livewire\Application\Payment\MainControlPayment;
 use App\Livewire\Application\Rapport\Payment\RapportAllReceiptBySection;
 use App\Http\Controllers\Application\Printings\PrintingReceiptController;
+use App\Http\Controllers\OtherMovementController;
 use App\Livewire\Application\Depense\ListEmprunt;
 use App\Livewire\Application\Depense\MyDepense;
 use App\Livewire\Application\Inscription\List\ListAllInscription;
@@ -41,7 +42,7 @@ use App\Livewire\Application\User\MyAccount;
 | contains the "web" middleware group. Now create something great!
 */
 
-Route::middleware(['auth', 'route-access-checker'])->group(function () {
+Route::middleware(['auth', 'route-access-checker',''])->group(function () {
     Route::get('/', ApplicationLinkController::class)->name('main');
     Route::get('/app-create-school', CreateSchoolController::class)->name('school.create');
     //DASHBOARD REFACTORING
@@ -56,7 +57,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('list-all-inscription', ListAllInscription::class)->name('inscription.list.all');
         Route::get('lis-inscription-by-classe/{classe}', ListInscriptionByClasse::class)->name('inscription.list.by.classe');
     });
-    //Payment routes inscription-by-classe
+    //Payment routes inscription-by-classe  finance-rapport
     Route::prefix('payment')->group(function () {
         Route::get('other-cost-payment', OtherCostPayment::class)->name('payment.other.cost');
         Route::get('control-payment', MainControlPayment::class)->name('payment.control');
@@ -130,8 +131,19 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
     //Print depense and emprunt
     Route::prefix('print-depense-emprunt')->group(function () {
         Route::controller(PrintingDepenseAndEmpruntController::class)->group(function () {
-            Route::get('depense/{month}', 'printDepenseMonth')->name('depense.month');
+            Route::get('depense/{month}/{currency?}/{source}/{category?}/{type_depense_id?}', 'printDepenseMonth')->name('depense.month');
             Route::get('emprunt/{month}', 'printEmpruntByMonth')->name('emprunt.month');
+        });
+    });
+    //Print other movements
+    Route::prefix('mouvement')->group(function () {
+        Route::controller(OtherMovementController::class)->group(function () {
+            Route::get('print-deposit-bank-by-month/{month}', 'printDepositBankByMonth')
+                ->name('print.deposit.bank.by.month');
+            //Money saving
+            Route::get('print-money-saving', 'printMoneySaving')->name('print.money.saving');
+            //Agent salary
+            Route::get('print-agent-salary', 'printAgentSalary')->name('print.agent.salary');
         });
     });
 });
