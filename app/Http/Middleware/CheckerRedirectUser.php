@@ -79,7 +79,8 @@ class CheckerRedirectUser
                 'depense.emprunt',
                 'movement.other',
                 'payment.finance.repport',
-                'payment.finance.repport.cost'
+                'payment.finance.repport.cost',
+                'inscrption.number'
             ],
             'Secretary' => [
                 'main',

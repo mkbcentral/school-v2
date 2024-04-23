@@ -22,6 +22,7 @@ use App\Http\Controllers\OtherMovementController;
 use App\Livewire\Application\Depense\ListEmprunt;
 use App\Livewire\Application\Depense\MyDepense;
 use App\Livewire\Application\Inscription\List\ListAllInscription;
+use App\Livewire\Application\Inscription\List\ListInscription;
 use App\Livewire\Application\Inscription\List\ListInscriptionByClasse;
 use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
@@ -145,5 +146,9 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
             //Agent salary
             Route::get('print-agent-salary', 'printAgentSalary')->name('print.agent.salary');
         });
+    });
+
+    Route::controller(ListInscriptionController::class)->group(function () {
+        Route::get('effectif/{type}', 'printNumberInscription')->name('inscrption.number');
     });
 });

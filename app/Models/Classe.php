@@ -93,4 +93,13 @@ class Classe extends Model
             ->orderBy('inscriptions.created_at', 'DESC')
             ->count();
     }
+
+    public function getNumberInscriptionByType($classeId, $type)
+    {
+        return   Inscription::where('inscriptions.scolary_year_id', (new SchoolHelper())
+            ->getCurrectScolaryYear()->id)
+            ->where('inscriptions.classe_id', $classeId)
+            ->where('is_old_student', $type)
+            ->count();
+    }
 }

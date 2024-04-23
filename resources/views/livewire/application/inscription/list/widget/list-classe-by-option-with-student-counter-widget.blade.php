@@ -1,6 +1,6 @@
 <div>
     @php
-        $total=0;
+        $total = 0;
     @endphp
     <div class="card">
         <div class="card-header">
@@ -22,24 +22,43 @@
             <div class="row mt-2" wire:loading.class='d-none'>
                 @foreach ($classeList as $classe)
                     <div class="col-md-6">
-                        <a href="{{ route('inscription.list.by.classe',$classe) }}" wire:navigate>
+                        <a href="{{ route('inscription.list.by.classe', $classe) }}" wire:navigate>
                             <div class="small-box bg-primary">
                                 <div class="inner">
                                     <h4 class="">{{ $classe->name . '/' . $classe->classeOption->name }}
-                                        ({{ $classe->getInscriptionsCountByClasseFroCurrentScolaryYear($classe->id) }})</h4>
-                                       </h4>
+                                        ({{ $classe->getInscriptionsCountByClasseFroCurrentScolaryYear($classe->id) }})
+                                    </h4>
+                                    </h4>
                                 </div>
                             </div>
                         </a>
                         @php
-                            $total+=$classe->getInscriptionsCountByClasseFroCurrentScolaryYear($classe->id);
+                            $total += $classe->getInscriptionsCountByClasseFroCurrentScolaryYear($classe->id);
                         @endphp
                     </div>
                 @endforeach
             </div>
         </div>
-        <div class="card-footer d-flex justify-content-end text-uppercase" wire:loading.class='d-none'>
-            <h4>Effectif total: {{$total}} élèves</h4>
+        <div class="card-footer " wire:loading.class='d-none'>
+            <div class="d-flex justify-content-between text-uppercase">
+
+                <div class="btn-group">
+                    <button type="button" class="btn btn-link dropdown-icon" data-toggle="dropdown"
+                        aria-expanded="false">
+                        <i class="fa fa-print" aria-hidden="true"></i>
+                        Impression
+                    </button>
+                    <div class="dropdown-menu" role="menu" style="">
+                        <a class="dropdown-item" target="_blank" href="{{ route('inscrption.number', 0) }}">
+                            <i class="fa fa-file-pdf" aria-hidden="true"></i> Inscriptions
+                        </a>
+                        <a class="dropdown-item" target="_blank" href="{{ route('inscrption.number', 1) }}">
+                            <i class="fa fa-file-pdf" aria-hidden="true"></i> Réinscriptions
+                        </a>
+                    </div>
+                </div>
+                <h4>Effectif total: {{ $total }} élèves</h4>
+            </div>
         </div>
     </div>
 </div>
