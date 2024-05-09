@@ -92,6 +92,17 @@ class ListInscriptionByClasse extends Component
         $this->dispatch('inscription-deleted', ['message' => "Inscription bien rétirée !"]);
     }
 
+    public function makeAbandonned(Inscription $inscription)
+    {
+        if ($inscription->is_abandoned == true) {
+            $inscription->is_abandoned = false;
+        } else {
+            $inscription->is_abandoned = true;
+        }
+        $inscription->update();
+        $this->dispatch('added', ['message' => 'Action bien réalisée']);
+    }
+
     public function render()
     {
         $this->inscriptions = GetAllInscriptionHelper::getListInscriptionByClasseForCurrentYear($this->classeId, $this->keyToSearch);

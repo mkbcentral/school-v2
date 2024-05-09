@@ -48,7 +48,7 @@
                 </thead>
                 <tbody>
                     @foreach ($inscriptions as $index => $inscription)
-                        <tr>
+                        <tr class="{{ $inscription->is_abandoned == true ? 'bg-danger' : '' }}">
                             <td class="text-center">{{ $index + 1 }}</td>
                             <td>{{ $inscription->student->name .
                                 '/' .
@@ -67,6 +67,11 @@
                                     <x-form.button wire:click='getInscription({{ $inscription }})' class="btn-sm btn-info"
                                         type="button" data-toggle="modal" data-target="#paymentsByStudent">
                                         <i class="fa fa-eye" aria-hidden="true"></i>
+                                    </x-form.button>
+                                    <x-form.button wire:click='makeAbandonned({{ $inscription }})'
+                                        wire:confirm="Voulez-vous réaliser l'action" class="btn-sm btn-danger"
+                                        type="button">
+                                        <i class="fa fa-times" aria-hidden="true"></i>
                                     </x-form.button>
                                     <x-form.button wire:click='editInscription({{ $inscription }})'
                                         class="btn-sm btn-secondary" type="button" data-toggle="modal"
