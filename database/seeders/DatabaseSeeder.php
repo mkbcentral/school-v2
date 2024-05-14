@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use App\Models\AppSetting;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -15,6 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        /*
         $appAdmin=User::factory()->create([
             'name' => config('app.name'),
              'email' => 'app-admin@school-app.app',
@@ -30,5 +32,13 @@ class DatabaseSeeder extends Seeder
         $appAdmin->assignRole($role1);
         $admin->assignRole($role2);
         AppSetting::create(['app_name'=>config('app.name')]);
+        */
+        $role = Role::find(4);
+        $audit = User::factory()->create([
+            'name' => 'Audit',
+            'email' => 'audit@aquila.app',
+            'school_id' => 1
+        ]);
+        $audit->assignRole($role);
     }
 }
