@@ -22,7 +22,7 @@ class ListPaymentGlobalRapport extends Component
     public $defaultScolaryYerId;
     public $cost_id = 0, $classe_id = 0;
     public $classeList = [];
-    public  $month;
+    public  $month = '';
 
     public $idPayment;
     protected $listeners = [

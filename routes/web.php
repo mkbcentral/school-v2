@@ -127,6 +127,9 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::controller(PrintingReceiptController::class)->group(function () {
             Route::get('inscription/{inscription}/{currency}', 'printReceiptInscription')->name('receipt.inscription');
             Route::get('payment/{payment}/{currency}', 'printReceiptPayment')->name('receipt.payment');
+            Route::get('student-payments/{inscription}', 'printReceiptStudentPayments')->name('receipt.students.payments');
+            Route::get('print-payment-list/{month}/{typeCostId}/{costId}/{classeId}', 'printListPaymentByMonth')
+                ->name('payment.list.month');
         });
     });
     //Print depense and emprunt

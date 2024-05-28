@@ -14,7 +14,7 @@ class MainControlPayment extends Component
     ];
     public $defaultScolaryYerId;
     public $selectedIndex = 0;
-    public bool $isByTranch=false;
+    public bool $isByTranch = false;
 
     /**
      * Change index for selected Type cost
@@ -24,7 +24,7 @@ class MainControlPayment extends Component
     public function changeIndex(TypeOtherCost $type): void
     {
         $this->selectedIndex = $type->id;
-        $this->isByTranch=$type->is_by_tranch;
+        $this->isByTranch = $type->is_by_tranch;
         $this->dispatch('typeCostSelected', $this->selectedIndex);
     }
 
@@ -44,15 +44,14 @@ class MainControlPayment extends Component
      */
     public function mount(): void
     {
-        $this->defaultScolaryYerId=(new SchoolHelper())->getCurrentScolaryYear()->id;
-        $this->isByTranch=(new TypeCostHelper())->getFirstTypeCostActive($this->defaultScolaryYerId)->is_by_tranch;
-        $this->selectedIndex=(new TypeCostHelper())->getFirstTypeCostActive($this->defaultScolaryYerId)->id;
-
+        $this->defaultScolaryYerId = (new SchoolHelper())->getCurrentScolaryYear()->id;
+        $this->isByTranch = (new TypeCostHelper())->getFirstTypeCostActive($this->defaultScolaryYerId)->is_by_tranch;
+        $this->selectedIndex = (new TypeCostHelper())->getFirstTypeCostActive($this->defaultScolaryYerId)->id;
     }
     public function render()
     {
-        return view('livewire.application.payment.main-control-payment',[
-            'listTypeCost'=>(new TypeCostHelper())->getListTypeCost($this->defaultScolaryYerId)
+        return view('livewire.application.payment.main-control-payment', [
+            'listTypeCost' => (new TypeCostHelper())->getListTypeCost($this->defaultScolaryYerId)
         ]);
     }
 }

@@ -10,6 +10,10 @@
             @if ($inscription->payments->isEmpty())
                 <x-data-empty />
             @else
+                <div class="d-flex justify-content-end">
+                    <a href="{{ route('receipt.students.payments', $inscription) }}" target="_blank"><i class="fa fa-print"
+                            aria-hidden="true"></i>Imprimer</a>
+                </div>
                 <table class="table table-striped">
                     <thead class="thead-inverse">
                         <tr>

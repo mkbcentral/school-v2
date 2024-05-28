@@ -47,12 +47,10 @@
                     <i class="fas fa-sync" aria-hidden="true"></i> Actualiser
                 </x-form.button>
                 @if (config('app.env') == 'production')
-                    }
                     <x-form.button type="button" wire:click='updateSoclyYearInscrption' class="btn btn-danger btn-sm">
                         <i class="fas fa-toolbox    "></i> Fixing
                     </x-form.button>
                 @endif
-
                 <div class="bg-warning ml-2 p-2">
                     @if ($amountPayments == null)
                         <h6 class="text-bold text-uppercase">Total: {{ app_format_number(0) }}</h6 class="tex-bold">
@@ -63,6 +61,8 @@
                         @endforeach
                     @endif
                 </div>
+                <a target="_blanck"
+                    href="{{ route('payment.list.month', [$month, $selectedIndex, $cost_id, $classe_id]) }}">Imprimer</a>
             </div>
         </div>
         @if ($listPayments->isEmpty())
@@ -103,7 +103,6 @@
                                 {{ app_get_month_name($payment->month_name) }}
                             </td>
                             <td class="text-center">
-
                                 <x-form.button class="btn-success btn-sm" type="button"
                                     wire:click="sendPaymentSMS({{ $payment->id }})">
 

@@ -11,18 +11,19 @@
                     @foreach ($listTypeCost as $type)
                         <li class="nav-item">
                             <a wire:click='changeIndex({{ $type }})'
-                               class="nav-link text-uppercase {{ $selectedIndex == $type->id ? 'active' : '' }}"
-                               href="#inscription" data-toggle="tab">
-                                &#x1F4C2; {{ $type->name}}
+                                class="nav-link text-uppercase {{ $selectedIndex == $type->id ? 'active' : '' }}"
+                                href="#inscription" data-toggle="tab">
+                                &#x1F4C2; {{ $type->name }}
                             </a>
                         </li>
                     @endforeach
                 </ul>
             </div>
-            @if($isByTranch)
-                @livewire('application.payment.list.list-student-control-by-tranch',['selectedIndex' => $selectedIndex])
+            @if ($isByTranch)
+                <span>By tranch</span>
+                @livewire('application.payment.list.list-student-control-by-tranch', ['selectedIndex' => $selectedIndex])
             @else
-                @livewire('application.payment.list.list-student-control-by-month',['selectedIndex' => $selectedIndex])
+                @livewire('application.payment.list.list-student-control-by-month', ['selectedIndex' => $selectedIndex])
             @endif
 
         </div>

@@ -80,7 +80,9 @@ class CheckerRedirectUser
                 'movement.other',
                 'payment.finance.repport',
                 'payment.finance.repport.cost',
-                'inscrption.number'
+                'inscrption.number',
+                'payment.list.month',
+                'receipt.students.payments'
             ],
             'Secretary' => [
                 'main',
