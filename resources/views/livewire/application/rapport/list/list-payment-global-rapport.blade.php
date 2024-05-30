@@ -12,6 +12,9 @@
                     wire:model.live='date_to_search' />
             </div>
         </div>
+        <div>
+            <a target="_blanck" href="{{ route('exempt.payment') }}">Excemptés</a>
+        </div>
         <div class="d-flex justify-content-end align-items-center">
             <div class="form-group ">
                 <x-form.label value="{{ __('Choisor frais') }}" />
@@ -36,6 +39,7 @@
         </div>
 
     </div>
+
     <div>
         <div class="d-flex justify-content-between align-items-center">
             <x-form.search-input wire:model.live='keyToSearch' />

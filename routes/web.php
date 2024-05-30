@@ -28,6 +28,7 @@ use App\Livewire\Application\Movement\OtherMovement;
 use App\Livewire\Application\Parents\ListParents;
 use App\Livewire\Application\Payment\FinanceByCostRepportView;
 use App\Livewire\Application\Payment\FinanceRepportView as PaymentFinanceRepportView;
+use App\Livewire\Application\Payment\List\ExemptPaymentList;
 use App\Livewire\Application\Payment\MainLatePaymeent;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;
 use App\Livewire\Application\Tarification\CostTarification;
@@ -65,6 +66,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('late', MainLatePaymeent::class)->name('payment.late');
         Route::get('finance-repport', PaymentFinanceRepportView::class)->name('payment.finance.repport');
         Route::get('finance-repport-cost', FinanceByCostRepportView::class)->name('payment.finance.repport.cost');
+        Route::get('exempt-payment', ExemptPaymentList::class)->name('exempt.payment');
     });
     //Settings links route
     Route::prefix('settings')->group(function () {

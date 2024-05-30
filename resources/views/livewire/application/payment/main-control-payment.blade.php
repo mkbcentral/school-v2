@@ -20,7 +20,6 @@
                 </ul>
             </div>
             @if ($isByTranch)
-                <span>By tranch</span>
                 @livewire('application.payment.list.list-student-control-by-tranch', ['selectedIndex' => $selectedIndex])
             @else
                 @livewire('application.payment.list.list-student-control-by-month', ['selectedIndex' => $selectedIndex])

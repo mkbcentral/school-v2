@@ -24,5 +24,4 @@
             </div>
         </div>
     </x-content.main-content-page>
-
 </div>
