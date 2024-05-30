@@ -11,6 +11,19 @@
                 <x-form.label value="{{ __('Choisir un le mois') }}" />
                 <x-widget.list-month wire:model.live='month' />
             </div>
+            <div class="form-group ">
+                <x-form.label value="{{ __('Choisor frais') }}" />
+                <x-select wire:model.live='idCost'>
+                    <option value="">Choisir...</option>
+                    @foreach ($costs as $cost)
+                        <option value="{{ $cost->id }}">
+                            {{ $cost->name }}</option>
+                    @endforeach
+                </x-select>
+            </div>
+        </div>
+        <div class="d-flex justify-content-center align-items-center">
+            <x-widget.loading-circular-md />
         </div>
         @if ($payments->isEmpty())
             <x-data-empty />
