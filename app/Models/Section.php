@@ -51,4 +51,16 @@ class Section extends Model
             ->sum('cost_generals.amount');
         return $amount;
     }
+
+    public function getCostBySectionAmount()
+    {
+        $amount = Payment::join('cost_generals', 'cost_generals.id', 'payments.cost_general_id')
+            ->join('type_other_costs', 'type_other_costs.id', 'cost_generals.type_other_cost_id')
+            ->join('classe_options', 'classe_options.id', 'cost_generals.classe_option_id')
+            ->leftJoin('sections', 'sections.id', 'classe_options.section_id')
+            ->where('sections.id', $this->id)
+            ->where('type_other_costs.id', 11)
+            ->sum('cost_generals.amount');
+        return $amount;
+    }
 }

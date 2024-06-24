@@ -5,7 +5,6 @@ namespace App\Livewire\Application\Rapport\Payment;
 use App\Livewire\Helpers\SchoolHelper;
 use App\Models\Section;
 use App\Models\TypeOtherCost;
-use Illuminate\Support\Collection;
 use Livewire\Component;
 
 class RapportCostEtat extends Component

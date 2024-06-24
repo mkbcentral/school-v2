@@ -30,6 +30,7 @@ use App\Livewire\Application\Payment\FinanceByCostRepportView;
 use App\Livewire\Application\Payment\FinanceRepportView as PaymentFinanceRepportView;
 use App\Livewire\Application\Payment\List\ExemptPaymentList;
 use App\Livewire\Application\Payment\MainLatePaymeent;
+use App\Livewire\Application\Rapport\Payment\RapportCostBySection;
 use App\Livewire\Application\Rapport\Payment\RapportCostEtat;
 use App\Livewire\Application\Tarification\CostTarification;
 use App\Livewire\Application\User\MyAccount;
@@ -79,6 +80,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('payment-all-receipt-by-section', RapportAllReceiptBySection::class)->name('rapport.receipt.all.by.section');
         Route::get('inscription-by-classe', RapportInscriptionByClasse::class)->name('rapport.inscription.by.classe');
         Route::get('payment-cost-etat', RapportCostEtat::class)->name('rapport.payment.cost.etat');
+        Route::get('payment-cost-by-section', RapportCostBySection::class)->name('rapport.payment.cost.by.section');
     });
 
     //Depense

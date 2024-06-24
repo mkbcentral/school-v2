@@ -13,7 +13,9 @@
             </div>
         </div>
         <div>
-            <a target="_blanck" href="{{ route('exempt.payment') }}">Excemptés</a>
+            <a target="_blanck" class="btn btn-warning btn-sm" href="{{ route('exempt.payment') }}">Excemptés</a>
+            <a target="_blanck" class="btn btn-info btn-sm" href="{{ route('rapport.payment.cost.by.section') }}">Par
+                section</a>
         </div>
         <div class="d-flex justify-content-end align-items-center">
             <div class="form-group ">

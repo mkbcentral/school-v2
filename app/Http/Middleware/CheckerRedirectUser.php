@@ -83,7 +83,8 @@ class CheckerRedirectUser
                 'inscrption.number',
                 'payment.list.month',
                 'receipt.students.payments',
-                'exempt.payment'
+                'exempt.payment',
+                'rapport.payment.cost.by.section'
             ],
             'Secretary' => [
                 'main',
