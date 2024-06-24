@@ -2,7 +2,7 @@
     @php
         $total = 0;
     @endphp
-    <x-navigation.bread-crumb icon='fas fa-chart-pie' label="Situation Frais de l'Etat">
+    <x-navigation.bread-crumb icon='fas fa-chart-pie' label="Situation Frais par section">
         <x-navigation.bread-crumb-item label='Menu' link='main' isLinked=true />
         <x-navigation.bread-crumb-item label='Dashboard' link='dashboard.main' isLinked=true />
         <x-navigation.bread-crumb-item label="Situation Frais de l'Etat" />
