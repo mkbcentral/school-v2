@@ -74,7 +74,7 @@ Route::middleware(['auth', 'route-access-checker'])->group(function () {
         Route::get('app-link-settings', AppLinkSettings::class)->name('settings.app.links');
         Route::get('app-settings', AppSettings::class)->name('settings.app');
     });
-    //Rapport payment
+    //Rapport paymentrapport.payment.cost.by.section
     Route::prefix('rapport')->group(function () {
         Route::get('payments', PaymentRapport::class)->name('rapport.payments');
         Route::get('payment-all-receipt-by-section', RapportAllReceiptBySection::class)->name('rapport.receipt.all.by.section');

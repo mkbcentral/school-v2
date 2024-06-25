@@ -52,7 +52,7 @@ class Section extends Model
         return $amount;
     }
 
-    public function getCostBySectionAmount()
+    public function getCostBySectionAmount($optionId, $month)
     {
         $amount = Payment::join('cost_generals', 'cost_generals.id', 'payments.cost_general_id')
             ->join('type_other_costs', 'type_other_costs.id', 'cost_generals.type_other_cost_id')
@@ -60,6 +60,12 @@ class Section extends Model
             ->leftJoin('sections', 'sections.id', 'classe_options.section_id')
             ->where('sections.id', $this->id)
             ->where('type_other_costs.id', 11)
+            ->when($optionId, function ($query, $optionId) {
+                return $query->where('classe_options.id', $optionId);
+            })
+            ->when($month, function ($query, $month) {
+                return $query->where('payments.month_name', $month);
+            })
             ->sum('cost_generals.amount');
         return $amount;
     }
